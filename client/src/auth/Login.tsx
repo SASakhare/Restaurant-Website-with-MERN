@@ -40,7 +40,7 @@ const Login = () => {
                 email: fieldErrors.email?.[0] || "",
                 password: fieldErrors.password?.[0] || ""
             } as Partial<LoginInputState>)
-            
+
             return;
         }
 
@@ -100,7 +100,15 @@ const Login = () => {
 
                 <Separator />
 
-                <p className=" mt-4 flex justify-center items-center">
+                <p className=" mt-1 flex justify-center items-center">
+                    Forgot Password  ? {" "}
+                    <Link to="/forgot-password" className="text-blue-500 underline ml-2">forgot password</Link>
+                </p>
+                <p className=" mt-1 flex justify-center items-center">
+                    want to Reset Password  ? {" "}
+                    <Link to="/reset-password" className="text-blue-500 underline ml-2">reset password</Link>
+                </p>
+                <p className=" mt-1 flex justify-center items-center">
                     Don't have an account  ? {" "}
                     <Link to="/singup" className="text-blue-500 underline ml-2">Singup</Link>
                 </p>

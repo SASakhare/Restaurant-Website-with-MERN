@@ -1,8 +1,11 @@
 import Login from "./auth/Login"
 
-import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import MainLayout from "./MainLayout"
 import Singup from "./auth/Singup"
+import ForgotPassword from "./auth/ForgotPassword"
+import ResetPassword from "./auth/ResetPassword"
+import VerifyEmail from "./auth/VerifyEmail"
 
 const appRouter = createBrowserRouter([
   {
@@ -12,9 +15,22 @@ const appRouter = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
-  }, {
+  },
+  {
     path: "/singup",
     element: <Singup />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />
+  },
+  {
+    path: "/verify-email",
+    element: <VerifyEmail />
   },
 ])
 
