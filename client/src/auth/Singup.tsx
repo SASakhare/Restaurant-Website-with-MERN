@@ -2,16 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { userSingupSchema, type SingupInputState } from "@/schema/userSchema"
 import { Loader2, Lock, Mail, Phone, User } from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { Link } from "react-router-dom"
 
-type SingupInputState = {
-    fullname: string,
-    email: string,
-    password: string,
-    contact: string,
-}
+
 
 const Singup = () => {
 
@@ -21,9 +17,9 @@ const Singup = () => {
         fullname: "",
         email: "",
         password: "",
-        contact: ""
+        contact: "",
     })
-
+    const [errors, setErrors] = useState<Partial<SingupInputState>>({});
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setInput({
@@ -31,15 +27,37 @@ const Singup = () => {
         })
     }
 
-    const loginSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const singupSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // console.log(input);
+
+        // *  form validation check start
+
+        const result = userSingupSchema.safeParse(input);
+
+        if (!result.success) {
+
+            const fieldErrors = result.error.flatten().fieldErrors;
+            console.log(fieldErrors);
+
+            setErrors({
+                fullname: fieldErrors.fullname?.[0] || "",
+                email: fieldErrors.email?.[0] || "",
+                password: fieldErrors.password?.[0] || "",
+                contact: fieldErrors.contact?.[0] || "",
+            } as Partial<SingupInputState>);
+
+            return;
+        }
+
+        // * login api implementation start here
         console.log(input);
 
     }
 
     return (
         <div className="flex items-center justify-center w-screen h-screen ">
-            <form onSubmit={loginSubmitHandler} className="md:border md:p-8 mx-4 md:border-gray-200 w-full max-w-md rounded-lg">
+            <form onSubmit={singupSubmitHandler} className="md:border md:p-8 mx-4 md:border-gray-200 w-full max-w-md rounded-lg">
                 <div className="mb-6 flex justify-center items-center">
                     <h1 className="text-3xl font-bold ">Royal Masala</h1>
                 </div>
@@ -55,6 +73,9 @@ const Singup = () => {
                         onChange={changeEventHandler}
                     />
                     <User className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.fullname}</span>
+                    }
                 </div>
                 <div className="mb-6 flex  flex-col gap-2 relative">
                     <Label htmlFor="email" className="pl-2 font-bold">Email</Label>
@@ -68,6 +89,9 @@ const Singup = () => {
                         onChange={changeEventHandler}
                     />
                     <Mail className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.email}</span>
+                    }
                 </div>
                 <div className="mb-6 flex  flex-col gap-2 relative">
                     <Label htmlFor="contact" className="pl-2 font-bold">Contact</Label>
@@ -81,6 +105,9 @@ const Singup = () => {
                         onChange={changeEventHandler}
                     />
                     <Phone className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.contact}</span>
+                    }
                 </div>
 
                 <div className="mb-6 flex  flex-col gap-2 relative">
@@ -95,6 +122,9 @@ const Singup = () => {
                         onChange={changeEventHandler}
                     />
                     <Lock className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.password}</span>
+                    }
                 </div>
 
                 <div className="mb-6 flex justify-center items-center">

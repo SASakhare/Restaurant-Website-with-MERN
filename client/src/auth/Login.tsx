@@ -2,14 +2,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { userLoginSchema, type LoginInputState } from "@/schema/userSchema"
 import { Loader2, Lock, Mail } from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { Link } from "react-router-dom"
 
-type LoginInputState = {
-    email: string,
-    password: string,
-}
 
 const Login = () => {
 
@@ -20,6 +17,8 @@ const Login = () => {
         password: "",
     })
 
+    const [errors, setErrors] = useState<Partial<LoginInputState>>({})
+
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setInput({
@@ -27,10 +26,29 @@ const Login = () => {
         })
     }
 
-    const loginSubmitHandler=(e:FormEvent<HTMLFormElement>)=>{
+    const loginSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        // * input validation :
+
+        const result = userLoginSchema.safeParse(input)
+
+        if (!result.success) {
+            const fieldErrors = result.error.flatten().fieldErrors;
+
+            setErrors({
+                email: fieldErrors.email?.[0] || "",
+                password: fieldErrors.password?.[0] || ""
+            } as Partial<LoginInputState>)
+            
+            return;
+        }
+
+
+
+        //* api implementation here
         console.log(input);
-        
+
     }
 
     return (
@@ -51,6 +69,9 @@ const Login = () => {
                         onChange={changeEventHandler}
                     />
                     <Mail className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.email}</span>
+                    }
                 </div>
                 <div className="mb-6 flex  flex-col gap-2 relative">
                     <Label htmlFor="password" className="pl-2 font-bold">Password</Label>
@@ -64,6 +85,9 @@ const Login = () => {
                         onChange={changeEventHandler}
                     />
                     <Lock className="absolute top-6.5 left-2 text-2xl text-gray-600 pointer-events-none" />
+                    {
+                        errors && <span className="text-sm text-red-600">{errors.password}</span>
+                    }
                 </div>
 
                 <div className="mb-6 flex justify-center items-center">
