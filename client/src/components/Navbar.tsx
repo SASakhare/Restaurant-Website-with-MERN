@@ -155,31 +155,31 @@ const MobileNavBar = () => {
                             Profile
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/order'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <HandPlatter />
                         <span>
                             Order
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link  to={'/cart'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <ShoppingCart />
                         <span>
                             Cart {0}
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/admin/menu'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <SquareMenu />
                         <span>
                             Menu
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/admin/restaurant'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <Utensils />
                         <span>
                             Restaurant
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/admin/orders'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <PackageCheck />
                         <span>
                             Restaurants Orders
