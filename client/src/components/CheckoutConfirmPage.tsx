@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, type Dispatch, type FormEvent, type SetStat
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
-import { Contact, Globe, LocationEdit, Mail, MapPinIcon, Phone, PinIcon, User } from "lucide-react"
+import { Globe, LocationEdit, Mail, MapPinIcon, Phone, User } from "lucide-react"
 import { Button } from "./ui/button"
 
 
