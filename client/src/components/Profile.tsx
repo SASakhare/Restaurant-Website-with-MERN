@@ -1,8 +1,7 @@
-import { Globe, Loader2, Locate, Mail, MapPin, MapPinIcon, Plus } from "lucide-react"
+import { Globe, Loader2, Locate, Mail, MapPin, Plus } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react"
 import { Input } from "./ui/input";
-import { email } from "zod";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 
