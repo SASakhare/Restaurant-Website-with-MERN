@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Menu, Plus } from "lucide-react";
-import { useState, type ChangeEventHandler, type Dispatch, type FormEvent, type SetStateAction } from "react"
-import { file } from "zod";
+import { Loader2, Plus } from "lucide-react";
+import { useState, type Dispatch, type FormEvent, type SetStateAction } from "react"
+import EditMenu from "./EditMenu";
 
 type MenuItem = {
     url: string,
@@ -82,7 +82,14 @@ export const MenuCard = ({ url, itemName, description, price }: MenuItem) => {
         price: price
     })
 
-    
+    const [editOpen, setEditOpen] = useState<boolean>(false);
+
+    const updateHandler=(e:unknown)=>{
+        
+        setEditOpen(true);
+        
+    }
+
     return (
         <div className="flex flex-col gap-4 justify-center items-center md:p-4 p-2 shadow-xl hover:shadow-2xl transition-all duration-200 border rounded-2xl">
 
@@ -99,10 +106,11 @@ export const MenuCard = ({ url, itemName, description, price }: MenuItem) => {
                 </div>
             </div>
             <div className="w-full md:flex md:justify-end">
-                <Button className="w-full bg-button hover:bg-hoverButtonColor md:w-1/3 lg:w-1/3">
+                <Button onClick={updateHandler} className="w-full bg-button hover:bg-hoverButtonColor md:w-1/3 lg:w-1/3">
                     Edit
                 </Button>
             </div>
+            <EditMenu selectedItem={item} setSelectedItem={setItem} editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
     )
 }
