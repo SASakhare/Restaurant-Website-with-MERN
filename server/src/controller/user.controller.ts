@@ -131,7 +131,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
 
         //* send welcome email
 
-        await sendWelcomeEmail(user.email,user.fullname)
+        await sendWelcomeEmail(user.email, user.fullname)
 
         return res.send({
             success: true,
@@ -193,7 +193,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
         await user.save();
 
-        await sendPasswordResetEmail(user.email,`${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
+        await sendPasswordResetEmail(user.email, `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
 
 
         return res.status(200).json({
