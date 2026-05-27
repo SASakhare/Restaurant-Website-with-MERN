@@ -5,6 +5,7 @@ import crypto from "crypto"
 import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
+import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
 
 
 
@@ -41,7 +42,7 @@ export const signup = async (req: Request, res: Response) => {
 
         generateToken(res, user);
 
-        //* sendVerificationEmail(email,verification);
+        await sendVerificationEmail(email, verificationToken);
 
 
         const userWithoutPassword = User.findOne({ email }).select("-password");
@@ -130,14 +131,12 @@ export const verifyEmail = async (req: Request, res: Response) => {
 
         //* send welcome email
 
-        // await sendWelcomeEmail(user.email,user.fullname)
+        await sendWelcomeEmail(user.email,user.fullname)
 
         return res.send({
             success: true,
             message: "Email verified successfully"
         })
-
-
 
     } catch (error) {
         console.log(error);
@@ -194,7 +193,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
         await user.save();
 
-        // await sendPasswordResetEmail(user.email,`${process.env.FRONTEND_URL}/resetpassword/${token}`);
+        await sendPasswordResetEmail(user.email,`${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
 
 
         return res.status(200).json({
@@ -239,7 +238,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
         await user.save()
 
-        // await sendResetSuccessEmail(user.email,`${process.env.FRONTEND_URL}/resetpassword/${token}`);
+        await sendResetSuccessEmail(user.email);
 
         return res.status(200).json({
             success: true,
