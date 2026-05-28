@@ -5,7 +5,7 @@ import userRoute from './routes/user.route'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import restaurantRouter from "./routes/restaurant.routes"
-
+import MenuRouter from "./routes/menu.route"
 
 dotenv.config()
 
@@ -28,6 +28,7 @@ app.use(cors(corsOptions))
 
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/restaurant', restaurantRouter)
+app.use('/api/v1/menu', MenuRouter)
 
 
 
