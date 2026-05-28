@@ -4,7 +4,7 @@ import connectDB from "./db/connectDB";
 import userRoute from './routes/user.route'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
-
+import restaurantRouter from "./routes/restaurant.routes"
 
 
 dotenv.config()
@@ -27,7 +27,7 @@ app.use(cors(corsOptions))
 // * apis
 
 app.use('/api/v1/user', userRoute)
-
+app.use('/api/v1/restaurant', restaurantRouter)
 
 
 
