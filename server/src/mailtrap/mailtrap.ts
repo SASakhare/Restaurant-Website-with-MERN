@@ -11,20 +11,3 @@ export const sender = {
     name: "Restaurant Website with MERN",
 };
 
-const recipients = [
-    {
-        email: "sakharwsejal@gmail.com",
-    }
-];
-
-
-client.send({
-    from: sender,
-    to: recipients,
-    subject: "You are awesome!",
-    text: "Congrats for sending test email with Mailtrap!",
-    category: "Integration Test",
-}).then(console.log, console.error);
-
-
-
