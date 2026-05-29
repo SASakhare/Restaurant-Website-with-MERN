@@ -6,11 +6,11 @@ import { HandPlatter, Loader2, Menu, Moon, PackageCheck, ShoppingCart, SquareMen
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Separator } from "./ui/separator";
+import { useUserStore } from "@/store/useUserStore";
 
 const Navbar = () => {
 
-    const admin = true;
-    const loading = false;
+    const { user, loading } = useUserStore();
 
     return (
         <div className='max-w-7xl mx-auto p-7'>
@@ -23,8 +23,8 @@ const Navbar = () => {
                         <Link to={'/'}>Home</Link>
                         <Link to={'/profile'}>Profile</Link>
                         <Link to={'/order/status'}>Orders</Link>
-                        {
-                            admin && (
+                        {user?.admin &&
+                            (
                                 <Menubar>
                                     <MenubarMenu>
                                         <MenubarTrigger>
@@ -117,7 +117,9 @@ export default Navbar
 
 
 const MobileNavBar = () => {
-    const user = true;
+
+
+    const { user} = useUserStore();
 
     return (
         <Sheet>
@@ -167,28 +169,33 @@ const MobileNavBar = () => {
                             Cart {0}
                         </span>
                     </Link>
-                    <Link to={'/admin/menu'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
-                        <SquareMenu />
-                        <span>
-                            Menu
-                        </span>
-                    </Link>
-                    <Link to={'/admin/restaurant'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
-                        <Utensils />
-                        <span>
-                            Restaurant
-                        </span>
-                    </Link>
-                    <Link to={'/admin/orders'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
-                        <PackageCheck />
-                        <span>
-                            Restaurants Orders
-                        </span>
-                    </Link>
+                    {
+                        user?.admin && (<>
+
+                            <Link to={'/admin/menu'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                                <SquareMenu />
+                                <span>
+                                    Menu
+                                </span>
+                            </Link>
+                            <Link to={'/admin/restaurant'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                                <Utensils />
+                                <span>
+                                    Restaurant
+                                </span>
+                            </Link>
+                            <Link to={'/admin/orders'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                                <PackageCheck />
+                                <span>
+                                    Restaurants Orders
+                                </span>
+                            </Link>
+                        </>
+                        )}
                 </SheetDescription>
                 <SheetFooter>
                     {
-                        user && (
+                        (
                             <div className="flex flex-row items-center gap-6 bg-gray-100 mb-2 p-1 mx-auto w-full hover:bg-gray-200 rounded-xl font-black text-" >
                                 <Avatar>
                                     <AvatarImage />

@@ -131,7 +131,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             if (response.data.success) {
                 if (response.data.message) {
                     toast.success(response.data.message)
-                    
+
                 }
                 set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
             }
