@@ -1,6 +1,6 @@
 import Login from "./auth/Login"
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import React from "react"
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import Singup from "./auth/Singup"
 import ForgotPassword from "./auth/ForgotPassword"
 import ResetPassword from "./auth/ResetPassword"
@@ -15,11 +15,55 @@ import Restaurant from "./admin/Restaurant"
 import AddMenu from "./admin/AddMenu"
 import Orders from "./admin/Orders"
 import Success from "./components/Success"
+import { useUserStore } from "./store/useUserStore"
+
+
+const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
+
+  const { isAuthenticated, user } = useUserStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to={'/login'} replace />
+  }
+
+  if (!user?.isVerified) {
+    return <Navigate to={'/verify-email'} replace />
+  }
+
+  return children;
+}
+
+const IsAuthenticatedUser = ({ children }: { children: React.ReactNode }) => {
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { isAuthenticated, user } = useUserStore();
+
+  if (isAuthenticated && user?.isVerified) {
+    return <Navigate to={'/'} replace />
+  }
+
+  return children;
+}
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+
+  const { user, isAuthenticated } = useUserStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to={'/login'} replace />
+  }
+
+  if (!user?.admin) {
+    return <Navigate to={'/'} replace />
+  }
+
+  return children
+}
 
 const appRouter = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: <ProtectedRoutes> <MainLayout /> </ProtectedRoutes>,
     children: [
       {
         path: "/",
@@ -48,25 +92,25 @@ const appRouter = createBrowserRouter([
       // * admin service start from here
       {
         path: "/admin/restaurant",
-        element: <Restaurant />
+        element:<AdminRoute> <Restaurant /> </AdminRoute>
       },
       {
         path: "/admin/menu",
-        element: <AddMenu />
+        element:<AdminRoute>  <AddMenu /> </AdminRoute> 
       },
       {
         path: "/admin/orders",
-        element: <Orders />
+        element:<AdminRoute>  <Orders /></AdminRoute> 
       },
     ]
   },
   {
     path: "/login",
-    element: <Login />
+    element: <IsAuthenticatedUser><Login /></IsAuthenticatedUser>
   },
   {
     path: "/singup",
-    element: <Singup />
+    element: <IsAuthenticatedUser><Singup /></IsAuthenticatedUser>
   },
   {
     path: "/forgot-password",
