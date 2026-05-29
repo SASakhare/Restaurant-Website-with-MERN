@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
@@ -10,8 +10,19 @@ import { useUserStore } from "@/store/useUserStore";
 
 const Navbar = () => {
 
-    const { user, loading } = useUserStore();
+    const navigate = useNavigate();
+    const { user, loading, logout } = useUserStore();
+    const handleLogout = async () => {
 
+        try {
+            await logout();
+            navigate('/login')
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
     return (
         <div className='max-w-7xl mx-auto p-7'>
             <div className='flex items-center justify-between h-14'>
@@ -95,7 +106,7 @@ const Navbar = () => {
                                         Please wait
                                     </Button>
                                 ) : (
-                                    <Button className="bg-button hover:bg-hoverButtonColor">
+                                    <Button onClick={handleLogout} className="bg-button hover:bg-hoverButtonColor">
                                         Log out
                                     </Button>
                                 )
@@ -119,7 +130,19 @@ export default Navbar
 const MobileNavBar = () => {
 
 
-    const { user} = useUserStore();
+    const navigate = useNavigate();
+    const { user, logout, loading } = useUserStore();
+    const handleLogout = async () => {
+
+        try {
+            await logout();
+            navigate('/login')
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
 
     return (
         <Sheet>
@@ -207,7 +230,20 @@ const MobileNavBar = () => {
                         )
                     }
                     <SheetClose asChild>
-                        <Button type="submit" className="bg-button hover:bg-hoverButtonColor">Logout</Button>
+                        <>
+                            {
+                                loading ? (
+                                    <Button disabled className="bg-button hover:bg-hoverButtonColor">
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Please wait
+                                    </Button>
+                                ) : (
+                                    <Button onClick={handleLogout} className="bg-button hover:bg-hoverButtonColor">
+                                        Log out
+                                    </Button>
+                                )
+                            }
+                        </>
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

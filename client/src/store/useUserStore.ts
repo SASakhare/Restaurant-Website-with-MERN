@@ -145,13 +145,8 @@ export const useUserStore = create<UserState>()(persist((set) => ({
     logout: async () => {
         try {
             set({ loading: true });
-            const response = await axios.get(`${API_END_POINT}/check-auth`,
-                {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
+            const response = await axios.get(`${API_END_POINT}/logout`);
+
 
             if (response.data.success) {
                 toast.success(response.data.message)
