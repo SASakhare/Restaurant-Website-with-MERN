@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { userLoginSchema, type LoginInputState } from "@/schema/userSchema"
+import { useUserStore } from "@/store/useUserStore"
 import { Loader2, Lock, Mail } from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { Link } from "react-router-dom"
@@ -10,7 +11,9 @@ import { Link } from "react-router-dom"
 
 const Login = () => {
 
-    const loading = false;
+    // const loading = false;
+
+    const {login, loading} = useUserStore();
 
     const [input, setInput] = useState<LoginInputState>({
         email: "",
@@ -26,7 +29,7 @@ const Login = () => {
         })
     }
 
-    const loginSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const loginSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // * input validation :
@@ -47,7 +50,9 @@ const Login = () => {
 
 
         //* api implementation here
-        console.log(input);
+        // console.log(input);
+        await login(input)
+
 
     }
 

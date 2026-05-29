@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { userSingupSchema, type SingupInputState } from "@/schema/userSchema"
+import { useUserStore } from "@/store/useUserStore"
 import { Loader2, Lock, Mail, Phone, User } from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react"
 import { Link } from "react-router-dom"
@@ -11,7 +12,7 @@ import { Link } from "react-router-dom"
 
 const Singup = () => {
 
-    const loading = false;
+    // const loading = false;
 
     const [input, setInput] = useState<SingupInputState>({
         fullname: "",
@@ -20,6 +21,9 @@ const Singup = () => {
         contact: "",
     })
     const [errors, setErrors] = useState<Partial<SingupInputState>>({});
+
+    const {singup, loading } = useUserStore();
+
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setInput({
@@ -27,7 +31,7 @@ const Singup = () => {
         })
     }
 
-    const singupSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const singupSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // console.log(input);
 
@@ -51,7 +55,8 @@ const Singup = () => {
         }
 
         // * login api implementation start here
-        console.log(input);
+        // console.log(input);
+        await singup(input);
 
     }
 

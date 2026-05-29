@@ -45,7 +45,7 @@ export const signup = async (req: Request, res: Response) => {
         await sendVerificationEmail(email, verificationToken);
 
 
-        const userWithoutPassword = User.findOne({ email }).select("-password");
+        const userWithoutPassword = await User.findOne({ email }).select("-password");
 
         return res.status(201).json({
             success: true,
@@ -92,7 +92,7 @@ export const login = async (req: Request, res: Response) => {
         user.lastLogin = new Date();
         await user.save();
 
-        const userWithoutPassword = User.findOne({ email }).select("-password");
+        const userWithoutPassword = await User.findOne({ email }).select("-password");
 
         return res.status(200).json({
             success: true,
