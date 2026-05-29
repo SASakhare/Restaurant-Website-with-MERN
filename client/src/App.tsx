@@ -1,5 +1,5 @@
 import Login from "./auth/Login"
-import React from "react"
+import React, { useEffect } from "react"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import Singup from "./auth/Singup"
 import ForgotPassword from "./auth/ForgotPassword"
@@ -16,6 +16,7 @@ import AddMenu from "./admin/AddMenu"
 import Orders from "./admin/Orders"
 import Success from "./components/Success"
 import { useUserStore } from "./store/useUserStore"
+import Loading from "./components/Loading"
 
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
@@ -92,15 +93,15 @@ const appRouter = createBrowserRouter([
       // * admin service start from here
       {
         path: "/admin/restaurant",
-        element:<AdminRoute> <Restaurant /> </AdminRoute>
+        element: <AdminRoute> <Restaurant /> </AdminRoute>
       },
       {
         path: "/admin/menu",
-        element:<AdminRoute>  <AddMenu /> </AdminRoute> 
+        element: <AdminRoute>  <AddMenu /> </AdminRoute>
       },
       {
         path: "/admin/orders",
-        element:<AdminRoute>  <Orders /></AdminRoute> 
+        element: <AdminRoute>  <Orders /></AdminRoute>
       },
     ]
   },
@@ -127,6 +128,17 @@ const appRouter = createBrowserRouter([
 ])
 
 function App() {
+
+  const { checkAuthentication, isCheckingAuth } = useUserStore();
+
+  useEffect(() => {
+    checkAuthentication();
+  }, [checkAuthentication])
+
+  if (isCheckingAuth) {
+    return <Loading />
+  }
+
   return (
     <main>
       <RouterProvider router={appRouter}>
