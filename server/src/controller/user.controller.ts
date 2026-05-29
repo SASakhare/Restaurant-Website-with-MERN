@@ -135,7 +135,8 @@ export const verifyEmail = async (req: Request, res: Response) => {
 
         return res.send({
             success: true,
-            message: "Email verified successfully"
+            message: "Email verified successfully",
+            user,
         })
 
     } catch (error) {

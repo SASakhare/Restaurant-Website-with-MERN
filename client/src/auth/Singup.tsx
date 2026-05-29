@@ -6,7 +6,7 @@ import { userSingupSchema, type SingupInputState } from "@/schema/userSchema"
 import { useUserStore } from "@/store/useUserStore"
 import { Loader2, Lock, Mail, Phone, User } from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 
@@ -20,9 +20,11 @@ const Singup = () => {
         password: "",
         contact: "",
     })
+
+    const navigate = useNavigate();
     const [errors, setErrors] = useState<Partial<SingupInputState>>({});
 
-    const {singup, loading } = useUserStore();
+    const { singup, loading } = useUserStore();
 
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -56,7 +58,12 @@ const Singup = () => {
 
         // * login api implementation start here
         // console.log(input);
-        await singup(input);
+        try {
+            await singup(input);
+            navigate('/verify-email');
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 

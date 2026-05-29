@@ -76,7 +76,19 @@ const VerifyEmail = () => {
             otpSend += char;
         });
 
-        await verifyEmail(otpSend);
+        try {
+            console.log("Before Verify");
+
+            await verifyEmail(otpSend);
+
+            console.log("After Verify");
+
+            navigate("/");
+
+        } catch (error) {
+            console.log(error);
+
+        }
     };
 
     return (

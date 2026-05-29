@@ -104,6 +104,8 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             );
 
             if (response.data.success) {
+                console.log(response);
+                
                 toast.success(response.data.message)
                 set({ loading: false, user: response.data.user, isAuthenticated: true });
             }
@@ -112,6 +114,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             toast.error(error.response.data.message);
             set({ loading: false });
         }
+        return;
     },
 
     checkAuthentication: async () => {
@@ -127,10 +130,10 @@ export const useUserStore = create<UserState>()(persist((set) => ({
 
             if (response.data.success) {
                 toast.success(response.data.message)
-                set({ loading: false, user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
+                set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
             }
 
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error.response.data.message);
             set({ isAuthenticated: false, isCheckingAuth: false });
         }
