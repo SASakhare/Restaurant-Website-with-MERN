@@ -7,12 +7,48 @@ import { createJSONStorage, persist } from "zustand/middleware";
 const API_END_POINT = "http://localhost:4080/api/v1/restaurant"
 axios.defaults.withCredentials = true;
 
+export type MenuItem = {
+    _id: string;
+    name: string;
+    description: string;
+    price: number;
+    image: string;
+}
 
-export const useRestaurantStore = create<any>()(persist((set) => ({
+export type Restaurant = {
+    _id: string;
+    user: string;
+    restaurantName: string;
+    city: string;
+    country: string;
+    deliveryTime: number;
+    cuisines: string[];
+    menus: MenuItem[];
+    imageUrl: string;
+}
+
+
+
+export type RestaurantState = {
+    loading: boolean,
+    restaurant: Restaurant | null,
+    appliedFilter: string[],
+    searchRestaurants: null,
+    createRestaurant: (formData: FormData) => Promise<void>,
+    getRestaurant: () => Promise<void>,
+    updateRestaurant: (formData: FormData) => Promise<void>,
+    searchRestaurant: (searchText: string, searchQuery: string, selectedCuisines: any) => Promise<void>,
+    setAppliedFilter: (value: string) => void,
+    resetAppliedFilter: () => void,
+}
+
+export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
 
     loading: false,
     restaurant: null,
     searchRestaurants: null,
+    appliedFilter: [],
+
     createRestaurant: async (formData: FormData) => {
         try {
             set({ loading: true });
@@ -103,9 +139,49 @@ export const useRestaurantStore = create<any>()(persist((set) => ({
             set({ loading: false })
         }
     }
+    ,
+    setAppliedFilter: (value: string) => {
+
+        try {
+            set({ loading: true })
+
+            set((state) => {
+
+                const isAlreadyApplied = state.appliedFilter.includes(value);
+
+                const updatedFilter = isAlreadyApplied ? state.appliedFilter.filter((item) => item != value) : [...state.appliedFilter, value];
+                state.appliedFilter = updatedFilter;
+
+                return { appliedFilter: updatedFilter }
+            })
+            set({ loading: false })
+
+            return;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+
+            toast.error(error.response.data.message)
+            set({ loading: false })
 
 
+        }
+    }
+    ,
+    resetAppliedFilter: () => {
 
+        try {
+            set({ appliedFilter: [] })
+
+            return;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+
+            toast.error(error.response.data.message)
+            set({ loading: false })
+
+        }
+    }
+    ,
 
 
 }), {

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import FilterPage from "./FilterPage";
 import { Input } from "./ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import RestaurantCard from "./RestaurantCard";
@@ -9,6 +9,7 @@ import RestaurantCardSkeleton from "./RestaurantCardSkeleton";
 
 import { X } from "lucide-react";
 import NoResultFound from "./NoResultFound";
+import { useRestaurantStore } from "@/store/useRestaurantStore";
 
 
 const SearchPage = () => {
@@ -16,8 +17,23 @@ const SearchPage = () => {
     const params = useParams();
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    const loading = false;
-    const isresultGot = true;
+    const { loading, searchRestaurant, appliedFilter, searchRestaurants, setAppliedFilter } = useRestaurantStore();
+    const isresultGot = searchRestaurants ? true : false;
+
+    const onSearchHandler = async () => {
+
+        await searchRestaurant(params.text!, searchQuery, []);
+
+    }
+    useEffect(() => {
+        const fetchRestaurants = async () => {
+
+            await searchRestaurant(params.text!, searchQuery, appliedFilter);
+        }
+        fetchRestaurants();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.text, appliedFilter])
+
 
     return (
         <div className="max-w-7xl lg:mx-auto my-10  md:mx-6 mx-3">
@@ -36,17 +52,17 @@ const SearchPage = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
 
-                        <Button className="bg-button hover:bg-hoverButtonColor w-[15%]">
+                        <Button onClick={onSearchHandler} className="bg-button hover:bg-hoverButtonColor w-[15%]">
                             search
                         </Button>
                     </div>
                     {/* Searched Items display here */}
                     <div>
                         <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-2">
-                            <h1 className="mt-2 font-medium text-lg">(2) Search result found</h1>
+                            <h1 className="mt-2 font-medium text-lg">({searchRestaurants && searchRestaurants.length}) Search result found</h1>
                             <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
                                 {
-                                    ["biryani", "momos", "jalebi"].map((selectedFilter: string, idx: number) => (
+                                    appliedFilter.map((selectedFilter: string, idx: number) => (
                                         <div
                                             key={idx}
                                             className="relative inline-flex items-center max-w-full"
@@ -57,6 +73,7 @@ const SearchPage = () => {
                                                 }
                                             </Badge>
                                             <X
+                                                onClick={() => (setAppliedFilter(selectedFilter))}
                                                 size={16}
                                                 className="absolute text-[#D19254] right-1 hover:cursor-pointer"
                                             />
@@ -69,7 +86,7 @@ const SearchPage = () => {
                         {/* Restaurant Cards */}
 
                         {
-                            (!isresultGot) ? (
+                            (!loading && searchRestaurants == null || searchRestaurants.length == 0) ? (
                                 <NoResultFound searchText={`${params.text}`} />
                             ) : (
 
@@ -77,22 +94,16 @@ const SearchPage = () => {
                                     {
                                         !loading ? (
                                             <>
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
-                                                <RestaurantCard />
+                                                {
+                                                    searchRestaurants && searchRestaurants.map((item) => (
+
+                                                        <RestaurantCard item={item} />
+                                                    ))
+                                                }
                                             </>
 
                                         ) : (
                                             <>
-                                                <RestaurantCardSkeleton />
-                                                <RestaurantCardSkeleton />
-                                                <RestaurantCardSkeleton />
                                                 <RestaurantCardSkeleton />
                                                 <RestaurantCardSkeleton />
                                                 <RestaurantCardSkeleton />

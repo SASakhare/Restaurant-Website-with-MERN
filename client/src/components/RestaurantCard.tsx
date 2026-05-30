@@ -4,17 +4,19 @@ import { Globe, MapPin } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
-import HeroImage from "@/assets/hero.jpg"
+
+import { type Restaurant } from "@/store/useRestaurantStore"
 
 
-const RestaurantCard = () => {
+const RestaurantCard = ({ item }: { item: Restaurant }) => {
+
     return (
         <Card className="w-full max-w-sm dark:bg-gray-800 shadow-xl rounded-xl hover:shadow-2xl transition-all duration-300">
             <div className="relative">
 
                 <AspectRatio ratio={16 / 6}>
                     <img
-                        src={HeroImage}
+                        src={item.imageUrl}
                         alt="Card Image"
                         className="w-full h-full object-cover"
                     />
@@ -23,14 +25,14 @@ const RestaurantCard = () => {
                     <span className="text-sm font-medium text-gray-800 dark:text-gray-300">Featured</span>
                 </div>
                 <CardContent className="p-4">
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">AAyesha Biryani</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{item.restaurantName}</h1>
                     <div className="mt-2 gap-1 flex items-center text-gray-600 dark:text-gray-400">
                         <MapPin
                             size={16}
                         />
                         <p className="text-sm">
                             City:{""}
-                            <span className="font-medium">Nagpur</span>
+                            <span className="font-medium">{item.city}</span>
                         </p>
                     </div>
                     <div className="mt-2 gap-1 flex items-center text-gray-600 dark:text-gray-400">
@@ -39,12 +41,12 @@ const RestaurantCard = () => {
                         />
                         <p className="text-sm">
                             Country:{""}
-                            <span className="font-medium">India</span>
+                            <span className="font-medium">{item.country}</span>
                         </p>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
                         {
-                            ["biryani", "momos", "jalebi"].map((cuisine: string, idx: number) => (
+                            item.cuisines.map((cuisine: string, idx: number) => (
                                 <div
                                     key={idx}
                                     className="relative inline-flex items-center max-w-full"
@@ -60,7 +62,7 @@ const RestaurantCard = () => {
                     </div>
                 </CardContent>
                 <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
-                    <Link to={`/restaurant/${123}`}>
+                    <Link to={`/restaurant/${item._id}`}>
                         <Button className="bg-button hover:bg-hoverButtonColor font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">View Menus</Button>
                     </Link>
                 </CardFooter>
