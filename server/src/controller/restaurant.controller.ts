@@ -29,13 +29,16 @@ export const createRestaurant = async (req: Request, res: Response) => {
 
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
 
+        // console.log(cuisines);
+        // console.log(typeof cuisines);
+
         await Restaurant.create({
             user: req.id as any,
             restaurantName: restaurantName,
             city,
             country,
             deliveryTime,
-            cuisines: JSON.parse(cuisines),
+            cuisines: cuisines,
             imageUrl,
         });
 
@@ -60,11 +63,12 @@ export const getRestaurant = async (req: Request, res: Response) => {
 
     try {
 
-        const restaurant = await Restaurant.find({ user: req.id as any })
+        const restaurant = await Restaurant.findOne({ user: req.id as any }).populate('menus')
 
         if (!restaurant) {
             return res.status(404).json({
                 success: false,
+                restaurant:{},
                 message: "Restaurant not found"
             })
         }
@@ -106,7 +110,7 @@ export const updateRestaurant = async (req: Request, res: Response) => {
         restaurant.city = city;
         restaurant.country = country;
         restaurant.deliveryTime = deliveryTime;
-        restaurant.cuisines = JSON.parse(cuisines)
+        restaurant.cuisines = cuisines
 
         if (file) {
             const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);

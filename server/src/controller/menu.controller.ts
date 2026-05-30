@@ -103,6 +103,50 @@ export const updateMenu = async (req: Request, res: Response) => {
 }
 
 
+export const deleteMenu = async (req: Request, res: Response) => {
+
+    try {
+
+        const { id } = req.params;
+
+
+        const menu = await Menu.findById(id);
+
+        if (!menu) {
+            return res.status(404).json({
+                success: false,
+                message: " Menu is not found"
+            })
+        }
+
+        const restaurant = await Restaurant.findOne({ user: req.id as any })
+        
+        if (restaurant) {
+            restaurant.menus = restaurant.menus.filter(
+                (menuId) => menuId.toString() != id
+            );
+            await restaurant.save()
+        }
+
+        await menu.deleteOne();
+
+        return res.status(200).json({
+            success: true,
+            message: "Menu Deleted successfully",
+            menu,
+        })
+
+    } catch (error) {
+
+        console.log(error);
+        return res.status(500).json({
+            message: "Internal server error"
+        })
+
+    }
+}
+
+
 
 
 
