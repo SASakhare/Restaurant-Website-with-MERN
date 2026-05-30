@@ -211,7 +211,6 @@ export const searchRestaurant = async (req: Request, res: Response) => {
 
         const selectedCuisines = (req.query.selectedCuisines as string || "").split(",").filter(cuisine => cuisine).map((cuisine) => cuisine.toLowerCase())
 
-
         const query: any = {};
 
         // * basic search based on searchText (name,city,country)
@@ -233,7 +232,6 @@ export const searchRestaurant = async (req: Request, res: Response) => {
             ]
         }
 
-        // console.log(query);
 
         if (selectedCuisines.length > 0) {
             query.cuisines = { $in: selectedCuisines }
