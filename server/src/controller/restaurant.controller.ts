@@ -68,7 +68,7 @@ export const getRestaurant = async (req: Request, res: Response) => {
         if (!restaurant) {
             return res.status(404).json({
                 success: false,
-                restaurant:{},
+                restaurant: {},
                 message: "Restaurant not found"
             })
         }
@@ -209,7 +209,8 @@ export const searchRestaurant = async (req: Request, res: Response) => {
         const searchText = req.params.searchText || "";
         const searchQuery = req.query.searchQuery as string || ""
 
-        const selectedCuisines = (req.query.selectedCuisines as string || "").split(",").filter(cuisine => cuisine)
+        const selectedCuisines = (req.query.selectedCuisines as string || "").split(",").filter(cuisine => cuisine).map((cuisine) => cuisine.toLowerCase())
+
 
         const query: any = {};
 
