@@ -8,7 +8,7 @@ const API_END_POINT = "http://localhost:4080/api/v1/restaurant"
 axios.defaults.withCredentials = true;
 
 
-export const useRestaurantStore = create()(persist((set) => ({
+export const useRestaurantStore = create<any>()(persist((set) => ({
 
     loading: false,
     restaurant: null,
@@ -39,8 +39,10 @@ export const useRestaurantStore = create()(persist((set) => ({
 
         try {
             const response = await axios.get(`${API_END_POINT}`);
+            // console.log(response);
+
             if (response.data.success) {
-                toast.success(response.data.message)
+                // toast.success(response.data.message)
                 set({ loading: false, restaurant: response.data.restaurant })
 
             }
@@ -77,7 +79,7 @@ export const useRestaurantStore = create()(persist((set) => ({
         }
     }
     ,
-    searchRestaurant: async (searchText: string, searchQuery: string, selectedCuisines:any) => {
+    searchRestaurant: async (searchText: string, searchQuery: string, selectedCuisines: any) => {
 
         try {
             set({ loading: true })

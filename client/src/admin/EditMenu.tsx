@@ -2,10 +2,14 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useMenuStore } from "@/store/useMenuStore"
+import { useRestaurantStore } from "@/store/useRestaurantStore"
 import { Loader2 } from "lucide-react"
 import { useState, type Dispatch, type FormEvent, type SetStateAction } from "react"
+import { toast } from "sonner"
 
 type MenuItem = {
+    id: string,
     url: string,
     itemName: string,
     description: string,
@@ -13,6 +17,7 @@ type MenuItem = {
 }
 
 type NewMenuItem = {
+    id: string,
     file: File | undefined,
     name: string,
     description: string,
@@ -21,43 +26,57 @@ type NewMenuItem = {
 
 const EditMenu = ({ selectedItem, setSelectedItem, editOpen, setEditOpen }: { selectedItem: MenuItem, setSelectedItem: Dispatch<SetStateAction<MenuItem>>, editOpen: boolean, setEditOpen: Dispatch<SetStateAction<boolean>> }) => {
 
+    const { loading, editMenu } = useMenuStore();
+    const { getRestaurant } = useRestaurantStore();
+
 
     const [Item, setItem] = useState<NewMenuItem>({
-
+        id: selectedItem.id,
         file: undefined,
         name: selectedItem.itemName,
         description: selectedItem.description,
         price: selectedItem.price,
     });
 
-    const changeHandler = (e) => {
+    const changeHandler = (e: any) => {
         setItem({
             ...Item, [e.target.name]: e.target.type == "number" ? (e.target.value == "" ? "" : Number(e.target.value)) : e.target.value,
         })
     }
 
-    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(Item);
 
-        const newMenu = {
-            url: Item.file ? URL.createObjectURL(Item.file) : "",
-            itemName: Item.name,
-            description: Item.description,
-            price: Item.price,
+        try {
+            const newMenuItem = new FormData();
+            newMenuItem.append("id", Item.id);
+            newMenuItem.append("name", Item.name);
+            newMenuItem.append("description", Item.description);
+            newMenuItem.append("price", Item.price.toString());
+            if (Item.file) {
+                newMenuItem.append("image", Item.file)
+            }
+
+            const menu = await editMenu(newMenuItem);
+            await getRestaurant();
+
+            const newMenu = {
+                url: menu?.image || "",
+                itemName: menu?.name || "",
+                description: menu?.description || "",
+                price: menu?.price || "",
+            }
+
+            setEditOpen(false);
+
+            setSelectedItem({ ...newMenu as MenuItem })
+
+        } catch (error: any) {
+
+            toast.error(error.response.data.message);
         }
-
-
-        setEditOpen(false);
-
-        setSelectedItem({ ...newMenu })
-
-        // console.log("edit menu after update");
-        // * api implementation for menu update 
-
     }
 
-    const loading = false;
 
     return (
 

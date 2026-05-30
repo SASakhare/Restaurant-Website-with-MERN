@@ -5,60 +5,48 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Plus } from "lucide-react";
 import { useState, type Dispatch, type FormEvent, type SetStateAction } from "react"
 import EditMenu from "./EditMenu";
+import { useMenuStore } from "@/store/useMenuStore";
+import { toast } from "sonner";
+import { useRestaurantStore } from "@/store/useRestaurantStore";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 type MenuItem = {
+    id: string,
     url: string,
     itemName: string,
     description: string,
     price: string,
 }
 
-const Menuitems = [
-    {
-        url: "https://dfordelhi.in/wp-content/uploads/2016/10/Indian-Food-Samosa-Dish-HD-Wallpapers.jpg",
-        itemName: "Samosa",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates.",
-        price: "50"
-    },
-    {
-        url: "https://dfordelhi.in/wp-content/uploads/2016/10/Indian-Food-Samosa-Dish-HD-Wallpapers.jpg",
-        itemName: "Samosa",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates.",
-        price: "50"
-    },
-    {
-        url: "https://dfordelhi.in/wp-content/uploads/2016/10/Indian-Food-Samosa-Dish-HD-Wallpapers.jpg",
-        itemName: "Samosa",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates.",
-        price: "50"
-    },
-    {
-        url: "https://dfordelhi.in/wp-content/uploads/2016/10/Indian-Food-Samosa-Dish-HD-Wallpapers.jpg",
-        itemName: "Samosa",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates.",
-        price: "50"
-    },
-]
 
 
 const AddMenu = () => {
 
-    const [menuItems, setMenuItems] = useState<MenuItem[]>(Menuitems)
-
+    const { restaurant } = useRestaurantStore();
     const [open, setOpen] = useState<boolean>(false);
 
-    const loading = false;
 
     return (
         <div className="max-w-6xl mx-auto my-10 p-2">
             <div className="flex justify-between">
                 <h1 className="font-bold md:font-extrabold text-2xl">Available Menus</h1>
             </div>
-            <DialogMenu setMenuItems={setMenuItems} loading={loading} open={open} setOpen={setOpen} />
+            <DialogMenu open={open} setOpen={setOpen} />
             <div className="mt-6 space-y-4">
                 {
-                    menuItems.map((item, idx) => (
-                        <MenuCard key={idx} url={item.url} itemName={item.itemName} description={item.description} price={item.price} />
+                    restaurant.menus.map((item, idx) => (
+                        <MenuCard key={item._id} id={item._id} url={item.image} itemName={item.name} description={item.description} price={item.price} />
                     ))
                 }
 
@@ -70,12 +58,16 @@ const AddMenu = () => {
 
 
 
-export default AddMenu
+export default AddMenu;
 
 
-export const MenuCard = ({ url, itemName, description, price }: MenuItem) => {
+export const MenuCard = ({ id, url, itemName, description, price }: MenuItem) => {
+
+    const { deleteMenu } = useMenuStore();
+    const { getRestaurant } = useRestaurantStore();
 
     const [item, setItem] = useState<MenuItem>({
+        id: id,
         url: url,
         itemName: itemName,
         description: description,
@@ -84,10 +76,16 @@ export const MenuCard = ({ url, itemName, description, price }: MenuItem) => {
 
     const [editOpen, setEditOpen] = useState<boolean>(false);
 
-    const updateHandler=(e:unknown)=>{
-        
+
+    const updateHandler = (e: unknown) => {
+
         setEditOpen(true);
-        
+
+    }
+
+    const deleteHandler = async (e) => {
+        await deleteMenu(id);
+        await getRestaurant();
     }
 
     return (
@@ -105,10 +103,11 @@ export const MenuCard = ({ url, itemName, description, price }: MenuItem) => {
                     <h2 className="text-lg font-bold text-button" >Price : ₹<span>{item.price}</span></h2>
                 </div>
             </div>
-            <div className="w-full md:flex md:justify-end">
+            <div className="w-full gap-4 md:flex md:justify-end">
                 <Button onClick={updateHandler} className="w-full bg-button hover:bg-hoverButtonColor md:w-1/3 lg:w-1/3">
                     Edit
                 </Button>
+                <DeleteMenuDialog onDelete={deleteHandler} />
             </div>
             <EditMenu selectedItem={item} setSelectedItem={setItem} editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
@@ -122,8 +121,12 @@ type NewMenuItem = {
     price: string,
 }
 
-export const DialogMenu = ({ setMenuItems, loading, open, setOpen }: { setMenuItems: Dispatch<SetStateAction<MenuItem[]>>, loading: boolean, open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
 
+
+export const DialogMenu = ({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
+
+    const { loading, createMenu } = useMenuStore();
+    const { getRestaurant } = useRestaurantStore();
     const [Item, setItem] = useState<NewMenuItem>({
 
         file: undefined,
@@ -138,27 +141,36 @@ export const DialogMenu = ({ setMenuItems, loading, open, setOpen }: { setMenuIt
         })
     }
 
-    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(Item);
 
-        const newMenu = {
-            url: Item.file ? URL.createObjectURL(Item.file) : "",
-            itemName: Item.name,
-            description: Item.description,
-            price: Item.price,
+        // * api building for adding new item :
+
+        try {
+            const newMenuItem = new FormData();
+
+            newMenuItem.append("name", Item.name);
+            newMenuItem.append("description", Item.description);
+            newMenuItem.append("price", Item.price.toString());
+            if (Item.file) {
+                newMenuItem.append("image", Item.file)
+            }
+
+            await createMenu(newMenuItem);
+            await getRestaurant();
+
+            setOpen(false);
+
+            setItem({
+                file: undefined,
+                name: "",
+                description: "",
+                price: ""
+            })
+
+        } catch (error: any) {
+            toast.error(error.response.data.message)
         }
-
-        setMenuItems((prev) => [...prev, newMenu])
-
-        setOpen(false);
-
-        setItem({
-            file: undefined,
-            name: "",
-            description: "",
-            price: ""
-        })
 
     }
 
@@ -251,3 +263,46 @@ export const DialogMenu = ({ setMenuItems, loading, open, setOpen }: { setMenuIt
         </Dialog>
     )
 }
+
+
+type DeleteMenuDialogProps = {
+    onDelete: () => Promise<void>;
+};
+
+const DeleteMenuDialog = ({ onDelete }: DeleteMenuDialogProps) => {
+    return (
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                <Button className="w-full bg-button hover:bg-hoverButtonColor md:w-1/3 lg:w-1/3">
+                    Delete
+                </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>
+                        Are you absolutely sure?
+                    </AlertDialogTitle>
+
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete this menu item from your restaurant.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+
+                <AlertDialogFooter>
+                    <AlertDialogCancel>
+                        Cancel
+                    </AlertDialogCancel>
+
+                    <AlertDialogAction
+                        onClick={onDelete}
+                        className="bg-button! !hover:bg-hoverButtonColor"
+                    >
+                        Delete
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
+};
