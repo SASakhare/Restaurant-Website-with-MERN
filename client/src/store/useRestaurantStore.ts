@@ -32,6 +32,7 @@ export type Restaurant = {
 export type RestaurantState = {
     loading: boolean,
     restaurant: Restaurant | null,
+    singleRestaurant: Restaurant | null,
     appliedFilter: string[],
     searchRestaurants: null,
     createRestaurant: (formData: FormData) => Promise<void>,
@@ -39,6 +40,7 @@ export type RestaurantState = {
     updateRestaurant: (formData: FormData) => Promise<void>,
     searchRestaurant: (searchText: string, searchQuery: string, selectedCuisines: any) => Promise<void>,
     setAppliedFilter: (value: string) => void,
+    getSingleRestaurant: (id: string) => Promise<void>,
     resetAppliedFilter: () => void,
 }
 
@@ -48,7 +50,7 @@ export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
     restaurant: null,
     searchRestaurants: null,
     appliedFilter: [],
-
+    singleRestaurant: null,
     createRestaurant: async (formData: FormData) => {
         try {
             set({ loading: true });
@@ -182,6 +184,26 @@ export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
         }
     }
     ,
+    getSingleRestaurant: async (id: string) => {
+
+        try {
+
+            console.log(id);
+
+            const response = await axios.get(`${API_END_POINT}/${id}`);
+
+            if (response.data.success) {
+                // toast.success(response.data.message)
+                set({ loading: false, singleRestaurant: response.data.restaurant })
+
+            }
+            // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+
+            toast.error(error.response.data.message)
+            set({ loading: false, restaurant: null })
+        }
+    }
 
 
 }), {

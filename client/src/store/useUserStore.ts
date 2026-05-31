@@ -8,7 +8,7 @@ import { toast } from "sonner"
 const API_END_POINT = "http://localhost:4080/api/v1/user"
 axios.defaults.withCredentials = true;
 
-type User = {
+export type User = {
     fullname: string,
     email: string,
     contact: number,
@@ -20,7 +20,7 @@ type User = {
     isVerified: boolean,
 }
 
-type UserState = {
+export type UserState = {
     user: User | null,
     isAuthenticated: boolean,
     isCheckingAuth: boolean,
@@ -230,7 +230,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
         }
     },
 
-    
+
 
 }), {
     name: "user-name",

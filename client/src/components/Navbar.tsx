@@ -7,11 +7,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Separator } from "./ui/separator";
 import { useUserStore } from "@/store/useUserStore";
+import { useCartStore } from "@/store/useCartStore";
 
 const Navbar = () => {
 
     const navigate = useNavigate();
     const { user, loading, logout } = useUserStore();
+    const { cart } = useCartStore();
     const handleLogout = async () => {
 
         try {
@@ -87,7 +89,7 @@ const Navbar = () => {
                         <div>
                             <Link to={'/cart'} className="relative cursor-pointer">
                                 <ShoppingCart />
-                                <Button size={"icon"} className="absolute -inset-3 left-3 w-4 h-4 rounded-full text-center bg-red-500" >5</Button>
+                                <Button size={"icon"} className="absolute -inset-3 left-3 w-4 h-4 rounded-full text-center bg-red-500" >{cart.length}</Button>
                             </Link>
                         </div>
 
@@ -132,6 +134,7 @@ const MobileNavBar = () => {
 
     const navigate = useNavigate();
     const { user, logout, loading } = useUserStore();
+    const { cart } = useCartStore();
     const handleLogout = async () => {
 
         try {
@@ -189,7 +192,7 @@ const MobileNavBar = () => {
                     <Link to={'/cart'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <ShoppingCart />
                         <span>
-                            Cart {0}
+                            Cart {cart.length}
                         </span>
                     </Link>
                     {

@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { type MenuItem } from "./useRestaurantStore";
+import { toast } from "sonner";
 
 
-interface CartItem extends MenuItem {
+export interface CartItem extends MenuItem {
     quantity: number,
 }
 
@@ -28,7 +29,7 @@ export const useCartStore = create<CartState>()(persist((set) => ({
 
             if (existingItem) {
                 return {
-                    cart: state.cart.map((cartItem: CartItem) => cartItem._id == item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem);
+                    cart: state.cart.map((cartItem: CartItem) => cartItem._id == item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem),
                 }
             } else {
                 return {
@@ -37,11 +38,16 @@ export const useCartStore = create<CartState>()(persist((set) => ({
             }
 
         });
+
+        toast.success(`${item.name} added in cart successfully`)
     },
     clearCart: () => {
         set({
             cart: [],
         })
+
+        toast.success(`Cart is Clear successfully`)
+
     },
     removeFromTheCart: (id: string) => {
 
@@ -50,13 +56,17 @@ export const useCartStore = create<CartState>()(persist((set) => ({
                 cart: state.cart.filter((item) => item._id != id)
             }
         });
+        toast.success(`Item is Removed successfully`)
+
     },
     incrementQuantity: (id: string) => {
 
+        let itemName = "";
         set((state: CartState) => {
             return {
                 cart: state.cart.map((item) => {
                     if (item._id == id) {
+                        itemName = item.name;
                         return { ...item, quantity: item.quantity + 1 };
                     } else {
                         return item;
@@ -64,20 +74,26 @@ export const useCartStore = create<CartState>()(persist((set) => ({
                 })
             }
         })
+
+        toast.success(`${itemName} quantity is increased successfully`)
     },
     decrementQuantity: (id: string) => {
+        let itemName = "";
 
         set((state: CartState) => {
             return {
                 cart: state.cart.map((item) => {
                     if (item._id == id) {
-                        return { ...item, quantity: (item.quantity == 0 ? 0 : item.quantity - 1) };
+                        itemName = item.name;
+                        return { ...item, quantity: (item.quantity == 1 ? 1 : item.quantity - 1) };
                     } else {
                         return item;
                     }
                 })
             }
         })
+
+        toast.success(`${itemName} quantity is decreased successfully`)
     },
 
 }), {

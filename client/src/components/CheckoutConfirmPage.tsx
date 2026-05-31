@@ -4,18 +4,20 @@ import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 import { Globe, LocationEdit, Mail, MapPinIcon, Phone, User } from "lucide-react"
 import { Button } from "./ui/button"
+import { useUserStore } from "@/store/useUserStore"
 
 
 
 const CheckoutConfirmPage = ({ open, setOpen }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) => {
 
+    const { user } = useUserStore();
     const [input, setInput] = useState({
-        name: "",
-        email: "",
-        contact: "",
-        address: "",
-        city: "",
-        country: ""
+        name: user?.fullname || "",
+        email: user?.email || "",
+        contact: user?.contact || "",
+        address: user?.address || "",
+        city: user?.city || "",
+        country: user?.country || ""
     })
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -57,6 +59,7 @@ const CheckoutConfirmPage = ({ open, setOpen }: { open: boolean, setOpen: Dispat
                                 Email
                             </Label>
                             <Input
+                                disabled
                                 type="email"
                                 name="email"
                                 value={input.email}

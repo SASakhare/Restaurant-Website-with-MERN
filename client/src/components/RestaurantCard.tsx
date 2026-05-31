@@ -5,10 +5,17 @@ import { Badge } from './ui/badge'
 import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 
-import { type Restaurant } from "@/store/useRestaurantStore"
+import { useRestaurantStore, type Restaurant } from "@/store/useRestaurantStore"
 
 
 const RestaurantCard = ({ item }: { item: Restaurant }) => {
+
+    const { getSingleRestaurant } = useRestaurantStore();
+
+    const viewMenuHandler = async (e: any) => {
+
+        await getSingleRestaurant(item._id);
+    }
 
     return (
         <Card className="w-full max-w-sm dark:bg-gray-800 shadow-xl rounded-xl hover:shadow-2xl transition-all duration-300">
@@ -63,7 +70,7 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
                 </CardContent>
                 <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
                     <Link to={`/restaurant/${item._id}`}>
-                        <Button className="bg-button hover:bg-hoverButtonColor font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">View Menus</Button>
+                        <Button onClick={viewMenuHandler} className="bg-button hover:bg-hoverButtonColor font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">View Menus</Button>
                     </Link>
                 </CardFooter>
             </div>
