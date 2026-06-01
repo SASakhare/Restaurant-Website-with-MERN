@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { HandPlatter, Loader2, Menu, Moon, PackageCheck, ShoppingCart, SquareMenu, Sun, User, Utensils } from "lucide-react";
+import { HandPlatter, Home, Loader2, Menu, Moon, PackageCheck, ShoppingCart, SquareMenu, Sun, User, Utensils } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Separator } from "./ui/separator";
@@ -95,7 +95,7 @@ const Navbar = () => {
 
                         <div>
                             <Avatar>
-                                <AvatarImage />
+                                <AvatarImage src={user?.profilePicture}/>
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </div>
@@ -177,6 +177,12 @@ const MobileNavBar = () => {
                 </SheetHeader>
                 <Separator className="my-2" />
                 <SheetDescription className="flex-1 ">
+                    <Link to={'/'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                        <Home />
+                        <span>
+                            Home
+                        </span>
+                    </Link>
                     <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <User />
                         <span>

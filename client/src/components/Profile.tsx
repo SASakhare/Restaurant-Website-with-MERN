@@ -1,9 +1,10 @@
-import { Globe, Loader2, Locate, Mail, MapPin, Plus } from "lucide-react"
+import { Globe, Loader2, Locate, Mail, MapPin, Phone, Plus, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { useRef, useState, type ChangeEvent, type FormEvent } from "react"
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react"
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
+import { useUserStore } from "@/store/useUserStore";
 
 
 // type ProfileDataState={
@@ -18,6 +19,7 @@ import { Button } from "./ui/button";
 
 const Profile = () => {
 
+    const { user, updateProfile } = useUserStore();
     const [profileData, setProfileData] = useState({
         fullname: "",
         email: "",
@@ -31,11 +33,13 @@ const Profile = () => {
 
     const imagRef = useRef<HTMLInputElement | null>(null);
 
-    const [selectedProfilePicture, setSelectedProfilePicture] = useState<string>("");
+    const [selectedProfilePicture, setSelectedProfilePicture] = useState<string>(profileData.profilePicture);
 
     const changeHandler = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
 
         setProfileData({ ...profileData, [e.target.name]: e.target.value })
+        console.log(profileData);
+
 
     }
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
@@ -69,15 +73,27 @@ const Profile = () => {
 
 
     const loading = false;
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProfileData({
+            fullname: user?.fullname || "",
+            email: user?.email || "",
+            phone: user?.contact || "",
+            address: user?.address || "",
+            city: user?.city || "",
+            country: user?.country || "",
+            profilePicture: user?.profilePicture || ""
 
+        })
+    }, [user])
     return (
         <form onSubmit={updateProfileHandler} className=" max-w-7xl mx-auto my-5">
             <div className="flex items-center justify-center md:justify-start ">
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-center gap-2">
-                        <div className="relative group">
-                            <Avatar className="md:w-28 md:h-28 w-20 h-20 md:ml-20">
+                        <div className="relative group md:w-28 md:h-28 w-20 h-20 md:ml-20">
+                            <Avatar className="md:w-28 md:h-28 w-20 h-20 ">
                                 <AvatarImage src={selectedProfilePicture} />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
@@ -107,8 +123,7 @@ const Profile = () => {
                             value={profileData.fullname}
                             onChange={changeHandler}
                             placeholder="Sejal Sakhare"
-                            className="font-bold text-4xl outline-none border-none focus-visible:ring-transparent"
-
+                            className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl border-none focus-visible:ring-transparent"
                         />
 
                     </div>
@@ -117,15 +132,43 @@ const Profile = () => {
             </div>
             <div className="grid place-items-center md:grid-cols-2  md:gap-2 gap-3 my-10 g">
                 <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
+                    <User className="text-gray-500" />
+                    <div className="w-full">
+                        <Label>Name</Label>
+                        <input
+                            disabled
+                            name="email"
+                            value={profileData.fullname}
+                            onChange={changeHandler}
+                            placeholder="sakharwsejal@gmail.com"
+                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                        />
+                    </div>
+                </div>
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
                     <Mail className="text-gray-500" />
                     <div className="w-full">
                         <Label>Email</Label>
                         <input
+                            disabled
                             name="email"
                             value={profileData.email}
                             onChange={changeHandler}
                             placeholder="sakharwsejal@gmail.com"
-                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-red-400 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                        />
+                    </div>
+                </div>
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
+                    <Phone className="text-gray-500" />
+                    <div className="w-full">
+                        <Label>Call</Label>
+                        <input
+                            name="email"
+                            value={profileData.phone}
+                            onChange={changeHandler}
+                            placeholder="sakharwsejal@gmail.com"
+                            className="w-full text-gray-600  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
