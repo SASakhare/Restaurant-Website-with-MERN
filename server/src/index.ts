@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import restaurantRouter from "./routes/restaurant.routes"
 import MenuRouter from "./routes/menu.route"
+import path from "path";
+
 
 dotenv.config()
 
@@ -16,6 +18,10 @@ const corsOptions = {
 const app = express()
 
 const PORT = process.env.PORT || 3000
+
+const DIRNAME = path.resolve();
+
+
 
 //* default middleware
 
@@ -32,11 +38,15 @@ app.use('/api/v1/menu', MenuRouter)
 
 
 
-
 app.listen(PORT, () => {
     connectDB()
     //(`server running on http://localhost:${PORT}/`);
-
+    
 })
 
+app.use(express.static(path.join(DIRNAME,"/client/dist")));
+
+app.use((_,res)=>{
+    res.sendFile(path.resolve(DIRNAME,'client',"dist","index.html"));
+});
 

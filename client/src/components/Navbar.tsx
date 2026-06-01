@@ -136,6 +136,7 @@ export default Navbar
 
 const MobileNavBar = () => {
 
+    const { setTheme } = useTheme();
 
     const navigate = useNavigate();
     const { user, logout, loading } = useUserStore();
@@ -155,8 +156,8 @@ const MobileNavBar = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size={'icon'} className="rounded-full bg-gray-200 text-black hover:bg-gray-400" variant="outline">
-                    <Menu size={'18'} />
+                <Button size={'icon'} className="rounded-full bg-gray-200 hover:bg-gray-400" variant="outline">
+                    <Menu size={'18'} className="dark:text-white text-black" />
                 </Button>
             </SheetTrigger>
             <SheetContent className="flex flex-col p-4">
@@ -164,43 +165,46 @@ const MobileNavBar = () => {
                     <SheetTitle className="font-bold text-2xl">Royal Masala</SheetTitle>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="icon">
+                            <Button variant="outline" size="icon" className="focus-visible:outline-0 focus-visible:ring-0">
                                 <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
                                 <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
                                 <span className="sr-only">Toggle theme</span>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem >
+                            <DropdownMenuItem onClick={() => setTheme("light")}>
                                 Light
                             </DropdownMenuItem>
-                            <DropdownMenuItem >
+                            <DropdownMenuItem onClick={() => setTheme("dark")}>
                                 Dark
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("system")}>
+                                System
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </SheetHeader>
                 <Separator className="my-2" />
                 <SheetDescription className="flex-1 ">
-                    <Link to={'/'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151] items-center gap-8  dark:text-white  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <Home />
                         <span>
                             Home
                         </span>
                     </Link>
-                    <Link to={'/profile'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/profile'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151]  dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <User />
                         <span>
                             Profile
                         </span>
                     </Link>
-                    <Link to={'/order'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/order'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151]  dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <HandPlatter />
                         <span>
                             Order
                         </span>
                     </Link>
-                    <Link to={'/cart'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                    <Link to={'/cart'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151]  dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                         <ShoppingCart />
                         <span>
                             Cart {cart.length}
@@ -209,19 +213,19 @@ const MobileNavBar = () => {
                     {
                         user?.admin && (<>
 
-                            <Link to={'/admin/menu'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                            <Link to={'/admin/menu'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151] dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                                 <SquareMenu />
                                 <span>
                                     Menu
                                 </span>
                             </Link>
-                            <Link to={'/admin/restaurant'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                            <Link to={'/admin/restaurant'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151]  dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                                 <Utensils />
                                 <span>
                                     Restaurant
                                 </span>
                             </Link>
-                            <Link to={'/admin/orders'} className="flex mt-1 mb-2 bg-gray-100 items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
+                            <Link to={'/admin/orders'} className="flex mt-1 mb-2 dark:font-extrabold bg-gray-100 dark:bg-[#535151] dark:text-white items-center gap-8  px-3 py-2 cursor-pointer hover:bg-gray-200 rounded-xl text-black">
                                 <PackageCheck />
                                 <span>
                                     Restaurants Orders
@@ -233,12 +237,12 @@ const MobileNavBar = () => {
                 <SheetFooter>
                     {
                         (
-                            <div className="flex flex-row items-center gap-6 bg-gray-100 mb-2 p-1 mx-auto w-full hover:bg-gray-200 rounded-xl font-black text-" >
-                                <Avatar>
-                                    <AvatarImage />
+                            <div onClick={() => { navigate('/profile') }} className="flex dark:bg-gray-500 hover:cursor-pointer  flex-row items-center  bg-gray-100 mb-2 p-1  mx-auto w-full hover:bg-gray-200 rounded-xl font-black text-" >
+                                <Avatar className="ml-5">
+                                    <AvatarImage src={user?.profilePicture} />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <h1>Sejal Sakhare</h1>
+                                <h3 className="dark:text-white text-center w-full text-lg ">{user?.fullname.replace(/\b\w/g, char => char.toUpperCase())}</h3>
                             </div>
 
                         )
@@ -252,7 +256,7 @@ const MobileNavBar = () => {
                                         Please wait
                                     </Button>
                                 ) : (
-                                    <Button onClick={handleLogout} className="bg-button hover:bg-hoverButtonColor">
+                                    <Button onClick={handleLogout} className="bg-button hover:cursor-pointer hover:bg-hoverButtonColor">
                                         Log out
                                     </Button>
                                 )

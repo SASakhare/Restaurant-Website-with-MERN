@@ -89,17 +89,17 @@ export const MenuCard = ({ id, url, itemName, description, price }: MenuItem) =>
     }
 
     return (
-        <div className="flex flex-col gap-4 justify-center items-center md:p-4 p-2 shadow-xl hover:shadow-2xl transition-all duration-200 border rounded-2xl">
+        <div className="flex dark:border dark:border-gray-600 flex-col dark:S gap-4 justify-center items-center md:p-4 p-2 shadow-xl hover:shadow-2xl transition-all duration-200 border rounded-2xl">
 
             <div className="flex w-full gap-2 md:flex-row items-center md:space-x-4 ">
                 <img
                     src={item.url}
                     alt="menu item image"
-                    className="left-0 md:h-24 md:w-24 h-16 w-16 sm:h-20 sm:w-20 object-cover rounded-lg"
+                    className="left-0 md:h-24 md:w-24 h-16 w-16 sm:h-20 sm:w-20 object-cover rounded-lg dark:border dark:border-gray-600"
                 />
                 <div className="flex-1 justify-start">
-                    <h1 className="text-xl font-bold text-gray-800">{item.itemName}</h1>
-                    <p className="text-gray-700">{item.description}</p>
+                    <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">{item.itemName}</h1>
+                    <p className="text-gray-700 dark:text-gray-300">{item.description}</p>
                     <h2 className="text-lg font-bold text-button" >Price : ₹<span>{item.price}</span></h2>
                 </div>
             </div>
