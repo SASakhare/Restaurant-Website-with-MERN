@@ -35,7 +35,7 @@ const Singup = () => {
 
     const singupSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log(input);
+        // //(input);
 
         // *  form validation check start
 
@@ -44,7 +44,7 @@ const Singup = () => {
         if (!result.success) {
 
             const fieldErrors = result.error.flatten().fieldErrors;
-            console.log(fieldErrors);
+            //(fieldErrors);
 
             setErrors({
                 fullname: fieldErrors.fullname?.[0] || "",
@@ -57,12 +57,12 @@ const Singup = () => {
         }
 
         // * login api implementation start here
-        // console.log(input);
+        // //(input);
         try {
             await singup(input);
             navigate('/verify-email');
         } catch (error) {
-            console.log(error);
+            //(error);
         }
 
     }

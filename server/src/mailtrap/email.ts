@@ -21,7 +21,7 @@ export const sendVerificationEmail = async (email: string, verificationToken: st
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         throw new Error("Failed to send Email verification.")
     }
 
@@ -52,7 +52,7 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
         });
 
     } catch (error) {
-        console.log(error);
+        //(error);
         throw new Error("Failed to send Welcome Email")
     }
 
@@ -81,7 +81,7 @@ export const sendPasswordResetEmail = async (email: string, resetURL: string) =>
         });
 
     } catch (error) {
-        console.log(error);
+        //(error);
         throw new Error("Failed to send Reset Password Email")
     }
 
@@ -108,7 +108,7 @@ export const sendResetSuccessEmail = async (email: string) => {
         });
 
     } catch (error) {
-        console.log(error);
+        //(error);
         throw new Error("Failed to send Password Reset Success Email")
     }
 

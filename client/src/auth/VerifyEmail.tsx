@@ -77,16 +77,16 @@ const VerifyEmail = () => {
         });
 
         try {
-            console.log("Before Verify");
+            //("Before Verify");
 
             await verifyEmail(otpSend);
 
-            console.log("After Verify");
+            //("After Verify");
 
             navigate("/");
 
         } catch (error) {
-            console.log(error);
+            //(error);
 
         }
     };

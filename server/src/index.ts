@@ -35,7 +35,7 @@ app.use('/api/v1/menu', MenuRouter)
 
 app.listen(PORT, () => {
     connectDB()
-    console.log(`server running on http://localhost:${PORT}/`);
+    //(`server running on http://localhost:${PORT}/`);
 
 })
 

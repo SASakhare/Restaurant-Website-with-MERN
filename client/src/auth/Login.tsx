@@ -13,7 +13,7 @@ const Login = () => {
 
     // const loading = false;
 
-    const {login, loading} = useUserStore();
+    const { login, loading } = useUserStore();
 
     const [input, setInput] = useState<LoginInputState>({
         email: "",
@@ -50,7 +50,7 @@ const Login = () => {
 
 
         //* api implementation here
-        // console.log(input);
+        // //(input);
         await login(input)
 
 

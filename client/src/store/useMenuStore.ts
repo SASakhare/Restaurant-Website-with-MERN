@@ -18,7 +18,7 @@ type MenuState = {
     menu: Menu | null,
     createMenu: (formData: FormData) => Promise<void>,
     editMenu: (formData: FormData) => Promise<void>,
-    deleteMenu: (id:string) => Promise<void>,
+    deleteMenu: (id: string) => Promise<void>,
 }
 
 
@@ -42,7 +42,7 @@ export const useMenuStore = create<MenuState>()(persist((set) => ({
             }
 
         } catch (error: any) {
-            // console.log(error);
+            // //(error);
             toast.error(error.response.data.message)
             set({ loading: false })
         }
@@ -68,13 +68,13 @@ export const useMenuStore = create<MenuState>()(persist((set) => ({
             return response.data.menu;
 
         } catch (error: any) {
-            // console.log(error);
+            // //(error);
             toast.error(error.response.data.message)
             set({ loading: false })
         }
     },
 
-    deleteMenu: async (id:string) => {
+    deleteMenu: async (id: string) => {
         try {
 
             set({ loading: true });
@@ -85,7 +85,7 @@ export const useMenuStore = create<MenuState>()(persist((set) => ({
             }
 
         } catch (error: any) {
-            // console.log(error);
+            // //(error);
             toast.error(error.response.data.message)
             set({ loading: false })
         }

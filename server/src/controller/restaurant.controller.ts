@@ -29,8 +29,8 @@ export const createRestaurant = async (req: Request, res: Response) => {
 
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
 
-        // console.log(cuisines);
-        // console.log(typeof cuisines);
+        // //(cuisines);
+        // //(typeof cuisines);
 
         await Restaurant.create({
             user: req.id as any,
@@ -49,7 +49,7 @@ export const createRestaurant = async (req: Request, res: Response) => {
         });
 
     } catch (error) {
-        console.log(error);
+        //(error);
 
         return res.status(500).json({
             message: "Internal server error"
@@ -80,7 +80,7 @@ export const getRestaurant = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -127,7 +127,7 @@ export const updateRestaurant = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -158,7 +158,7 @@ export const getRestaurantOrder = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -194,7 +194,7 @@ export const updatedOrderStatus = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -246,7 +246,7 @@ export const searchRestaurant = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -281,7 +281,7 @@ export const getSingleRestaurant = async (req: Request, res: Response) => {
         })
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })

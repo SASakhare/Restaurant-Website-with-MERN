@@ -77,7 +77,7 @@ export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
 
         try {
             const response = await axios.get(`${API_END_POINT}`);
-            // console.log(response);
+            // //(response);
 
             if (response.data.success) {
                 // toast.success(response.data.message)
@@ -188,7 +188,7 @@ export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
 
         try {
 
-            console.log(id);
+            //(id);
 
             const response = await axios.get(`${API_END_POINT}/${id}`);
 

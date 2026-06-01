@@ -29,7 +29,7 @@ const Profile = () => {
     const changeHandler = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
 
         setProfileData({ ...profileData, [e.target.name]: e.target.value })
-        console.log(profileData);
+        //(profileData);
 
 
     }

@@ -37,14 +37,14 @@ const Restaurant = () => {
 
     const addRestaurantHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(input);
+        //(input);
 
         const result = restaurantFormSchema.safeParse(input)
 
         if (!result.success) {
 
             const fieldErrors = result.error.flatten().fieldErrors;
-            console.log(fieldErrors.cuisines);
+            //(fieldErrors.cuisines);
 
             setErrors({
                 restaurantName: fieldErrors.restaurantName?.[0] || "",
@@ -55,7 +55,7 @@ const Restaurant = () => {
                 imageFile: fieldErrors.imageFile?.[0] || "",
             } as unknown as Partial<RestaurantFormSchema>)
 
-            // console.log(errors ? "true" : "false");
+            // //(errors ? "true" : "false");
             return;
         } else {
             setErrors({});
@@ -85,7 +85,7 @@ const Restaurant = () => {
                 await createRestaurant(input);
             }
 
-            // console.log(errors);
+            // //(errors);
         } catch (error) {
             toast.error(error.response.data.message)
         }

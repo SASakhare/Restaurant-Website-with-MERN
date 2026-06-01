@@ -26,7 +26,7 @@ const CheckoutConfirmPage = ({ open, setOpen }: { open: boolean, setOpen: Dispat
 
     const checkoutHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(input);
+        //(input);
 
     }
     return (

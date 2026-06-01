@@ -45,7 +45,7 @@ export const addMenu = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -94,7 +94,7 @@ export const updateMenu = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })
@@ -120,7 +120,7 @@ export const deleteMenu = async (req: Request, res: Response) => {
         }
 
         const restaurant = await Restaurant.findOne({ user: req.id as any })
-        
+
         if (restaurant) {
             restaurant.menus = restaurant.menus.filter(
                 (menuId) => menuId.toString() != id
@@ -138,7 +138,7 @@ export const deleteMenu = async (req: Request, res: Response) => {
 
     } catch (error) {
 
-        console.log(error);
+        //(error);
         return res.status(500).json({
             message: "Internal server error"
         })

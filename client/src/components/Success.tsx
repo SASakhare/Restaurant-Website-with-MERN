@@ -44,6 +44,8 @@ const Success = () => {
     )
 }
 
+
+
 export default Success
 
 
@@ -67,3 +69,6 @@ const OrderStatusCard = () => {
         </div>
     )
 }
+
+
+

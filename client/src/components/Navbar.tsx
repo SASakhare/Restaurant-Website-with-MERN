@@ -12,7 +12,7 @@ import { useCartStore } from "@/store/useCartStore";
 
 const Navbar = () => {
 
-    const {setTheme } = useTheme();
+    const { setTheme } = useTheme();
     const navigate = useNavigate();
     const { user, loading, logout } = useUserStore();
     const { cart } = useCartStore();
@@ -23,7 +23,7 @@ const Navbar = () => {
             navigate('/login')
 
         } catch (error) {
-            console.log(error);
+            //(error);
 
         }
     }
@@ -147,7 +147,7 @@ const MobileNavBar = () => {
             navigate('/login')
 
         } catch (error) {
-            console.log(error);
+            //(error);
 
         }
     }

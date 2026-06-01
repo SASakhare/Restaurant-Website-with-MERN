@@ -54,7 +54,7 @@ export const signup = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -101,7 +101,7 @@ export const login = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -140,7 +140,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -160,7 +160,7 @@ export const logout = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -204,7 +204,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -248,7 +248,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -276,7 +276,7 @@ export const checkAuth = async (req: Request, res: Response) => {
 
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }
@@ -305,7 +305,7 @@ export const updateProfile = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.log(error);
+        //(error);
         return res.status(500).json({ message: "Internal Server Error" })
 
     }

@@ -21,7 +21,7 @@ const AvailableMenu = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 space-y-4 md:space-y-0 gap-3">
                 {
                     singleRestaurant?.menus.map((item) => (
-                        // console.log(item);
+                        // //(item);
                         <FoodCard item={item as MenuItem} />
 
                     ))
