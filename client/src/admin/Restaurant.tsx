@@ -99,12 +99,12 @@ const Restaurant = () => {
 
 
             setInput({
-                restaurantName: restaurant.restaurantName || "",
-                city: restaurant.city || "",
-                country: restaurant.country || "",
-                deliveryTime: restaurant.deliveryTime || "",
-                cuisines: restaurant.cuisines ? restaurant.cuisines.map((cuisine: string) => cuisine) : [],
-                imageFile: restaurant.imageFile || "",
+                restaurantName: restaurant?.restaurantName || "",
+                city: restaurant?.city || "",
+                country: restaurant?.country || "",
+                deliveryTime: restaurant?.deliveryTime || "",
+                cuisines: restaurant?.cuisines ? restaurant.cuisines.map((cuisine: string) => cuisine) : [],
+                imageFile: restaurant?.imageFile || "",
             })
         }
 
@@ -116,7 +116,7 @@ const Restaurant = () => {
         <div className="max-w-6xl mx-auto my-10 p-2">
             <div>
                 <div className="mb-6">
-                    <img src={restaurant.imageUrl} alt="Restaurant Banner" className="w-full md:h-70 lg:100 h-30 object-cover  rounded-lg shadow-xl hover:shadow-2xl " />
+                    <img src={restaurant?.imageUrl} alt="Restaurant Banner" className="w-full md:h-70 lg:100 h-30 object-cover  rounded-lg shadow-xl hover:shadow-2xl " />
                 </div>
                 <div>
                     <h1 className="font-extrabold text-2xl mb-5">Add Restaurant</h1>

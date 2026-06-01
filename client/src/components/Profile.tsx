@@ -7,19 +7,10 @@ import { Button } from "./ui/button";
 import { useUserStore } from "@/store/useUserStore";
 
 
-// type ProfileDataState={
-//     fullname:string,
-//     email:string,
-//     phone:string,
-//     address:string,
-//     city:string,
-//     country:string,
-//     p
-// }
 
 const Profile = () => {
 
-    const { user, updateProfile } = useUserStore();
+    const { user, updateProfile, loading } = useUserStore();
     const [profileData, setProfileData] = useState({
         fullname: "",
         email: "",
@@ -65,14 +56,15 @@ const Profile = () => {
 
     }
 
-    const updateProfileHandler = (e: FormEvent<HTMLFormElement>) => {
+    const updateProfileHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(profileData);
+
         // * api implementation here
+        await updateProfile(profileData);
     }
 
 
-    const loading = false;
+    // const loading = false;
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setProfileData({
@@ -94,8 +86,8 @@ const Profile = () => {
                     <div className="flex items-center justify-center gap-2">
                         <div className="relative group md:w-28 md:h-28 w-20 h-20 md:ml-20">
                             <Avatar className="md:w-28 md:h-28 w-20 h-20 ">
-                                <AvatarImage src={selectedProfilePicture} />
-                                <AvatarFallback>CN</AvatarFallback>
+                                <AvatarImage src={user?.profilePicture} />
+                                <AvatarFallback></AvatarFallback>
                             </Avatar>
 
                             {/* Overlay */}
@@ -136,8 +128,7 @@ const Profile = () => {
                     <div className="w-full">
                         <Label>Name</Label>
                         <input
-                            disabled
-                            name="email"
+                            name="name"
                             value={profileData.fullname}
                             onChange={changeHandler}
                             placeholder="sakharwsejal@gmail.com"
@@ -164,7 +155,7 @@ const Profile = () => {
                     <div className="w-full">
                         <Label>Call</Label>
                         <input
-                            name="email"
+                            name="contact"
                             value={profileData.phone}
                             onChange={changeHandler}
                             placeholder="sakharwsejal@gmail.com"

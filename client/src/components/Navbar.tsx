@@ -94,7 +94,7 @@ const Navbar = () => {
                         </div>
 
                         <div>
-                            <Avatar>
+                            <Avatar onClick={()=>{navigate('/profile') } } className="hover:cursor-pointer">
                                 <AvatarImage src={user?.profilePicture}/>
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>

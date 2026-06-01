@@ -210,7 +210,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
     updateProfile: async (input: any) => {
         try {
             set({ loading: true });
-            const response = await axios.post(`${API_END_POINT}/profile/update`, input,
+            const response = await axios.put(`${API_END_POINT}/profile/update`, input,
                 {
                     headers: {
                         "Content-Type": 'application/json'
