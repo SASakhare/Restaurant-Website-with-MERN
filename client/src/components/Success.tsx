@@ -18,8 +18,8 @@ const Success = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 px-4">
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 max-w-lg w-full">
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-[#0A0A0A] px-4">
+            <div className="bg-white dark:bg-[#100f0f] shadow-lg rounded-lg p-6 max-w-lg w-full">
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
                         Order Status:{" "}

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { useTheme } from "@/components/theme-provider"
 import { Button } from "./ui/button";
 import { HandPlatter, Home, Loader2, Menu, Moon, PackageCheck, ShoppingCart, SquareMenu, Sun, User, Utensils } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -11,6 +12,7 @@ import { useCartStore } from "@/store/useCartStore";
 
 const Navbar = () => {
 
+    const {setTheme } = useTheme();
     const navigate = useNavigate();
     const { user, loading, logout } = useUserStore();
     const { cart } = useCartStore();
@@ -70,18 +72,21 @@ const Navbar = () => {
                         <div>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="outline" size="icon">
+                                    <Button variant="outline" size="icon" className="focus-visible:outline-0 focus-visible:ring-0">
                                         <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
                                         <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
                                         <span className="sr-only">Toggle theme</span>
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem >
+                                    <DropdownMenuItem onClick={() => setTheme("light")}>
                                         Light
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem >
+                                    <DropdownMenuItem onClick={() => setTheme("dark")}>
                                         Dark
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => setTheme("system")}>
+                                        System
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -94,8 +99,8 @@ const Navbar = () => {
                         </div>
 
                         <div>
-                            <Avatar onClick={()=>{navigate('/profile') } } className="hover:cursor-pointer">
-                                <AvatarImage src={user?.profilePicture}/>
+                            <Avatar onClick={() => { navigate('/profile') }} className="hover:cursor-pointer">
+                                <AvatarImage src={user?.profilePicture} />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </div>

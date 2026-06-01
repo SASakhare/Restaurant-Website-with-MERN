@@ -7,11 +7,11 @@ const Orders = () => {
             <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-10">Orders Overview</h1>
             <div className="space-y-8 ">
                 {/* Restaurant Orders display here */}
-                <OrderCard/>
-                <OrderCard/>
-                <OrderCard/>
-                <OrderCard/>
-                <OrderCard/>
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
 
             </div>
         </div>
@@ -25,9 +25,9 @@ const OrderCard = () => {
     return (
         <div className="flex flex-col gap-4 md:flex-row justify-between items-start sm:items-center bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 sm:p-8 border-gray-500 dark:border-gray-700">
             <div className="flex-1 mb-6 sm:mb-0 ">
-                <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">lorem</h1>
-                <p className="text-gray-600 dark:text-gray-400">
-                    <span className="font-bold text-black">Address : </span>
+                <h1 className="text-xl font-semibold text-gray-800 dark:text-white">lorem</h1>
+                <p className="text-gray-600 dark:text-gray-200">
+                    <span className="font-bold text-black dark:text-red-200">Address : </span>
                     Lorem ipsum dolor sit amet  elit. Sed tenetur facere fugit sit asperiores voluptates laudantium velit provident.
                 </p>
                 <p className="text-gray-600 dark:text-gray-400 mt-2">

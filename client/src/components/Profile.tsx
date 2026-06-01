@@ -83,7 +83,7 @@ const Profile = () => {
             <div className="flex items-center justify-center md:justify-start ">
 
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="flex items-center justify-center gap-2 bg-transparent">
                         <div className="relative group md:w-28 md:h-28 w-20 h-20 md:ml-20">
                             <Avatar className="md:w-28 md:h-28 w-20 h-20 ">
                                 <AvatarImage src={user?.profilePicture} />
@@ -108,22 +108,18 @@ const Profile = () => {
                                 onChange={fileChangeHandler}
                             />
                         </div>
-
-                        <Input
-                            type="text"
-                            name="fullname"
-                            value={profileData.fullname}
-                            onChange={changeHandler}
-                            placeholder="Sejal Sakhare"
-                            className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl border-none focus-visible:ring-transparent"
-                        />
+                        <h3 className=" md:ml-4  font-bold text-xl bg-transparent text-center sm:text-2xl md:text-3xl lg:text-4xl border-none focus-visible:ring-transparent" >
+                            {
+                                profileData.fullname.toString().toUpperCase()
+                            }
+                        </h3>
 
                     </div>
                 </div>
 
             </div>
             <div className="grid place-items-center md:grid-cols-2  md:gap-2 gap-3 my-10 g">
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] dark:bg-gray-800 ">
                     <User className="text-gray-500" />
                     <div className="w-full">
                         <Label>Name</Label>
@@ -132,11 +128,11 @@ const Profile = () => {
                             value={profileData.fullname}
                             onChange={changeHandler}
                             placeholder="sakharwsejal@gmail.com"
-                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-gray-600 dark:text-gray-200 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]  dark:bg-gray-800 ">
                     <Mail className="text-gray-500" />
                     <div className="w-full">
                         <Label>Email</Label>
@@ -150,7 +146,7 @@ const Profile = () => {
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%] ">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]  dark:bg-gray-800">
                     <Phone className="text-gray-500" />
                     <div className="w-full">
                         <Label>Call</Label>
@@ -159,11 +155,11 @@ const Profile = () => {
                             value={profileData.phone}
                             onChange={changeHandler}
                             placeholder="sakharwsejal@gmail.com"
-                            className="w-full text-gray-600  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-gray-600 dark:text-gray-200  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]  dark:bg-gray-800">
                     <Locate className="text-gray-500" />
                     <div className="w-full">
                         <Label>Address</Label>
@@ -172,11 +168,11 @@ const Profile = () => {
                             value={profileData.address}
                             onChange={changeHandler}
                             placeholder="Flat No. 203, Sai Residency,Near MGM College Road, Aurangabad, Maharashtra - 431003,"
-                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-gray-600 dark:text-gray-200  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]  dark:bg-gray-800">
                     <MapPin className="text-gray-500" />
                     <div className="w-full">
                         <Label>City</Label>
@@ -185,11 +181,11 @@ const Profile = () => {
                             value={profileData.city}
                             onChange={changeHandler}
                             placeholder="nagpur"
-                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-gray-600 dark:text-gray-200  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]">
+                <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 w-[90%]  dark:bg-gray-800">
                     <Globe className="text-gray-500" />
                     <div className="w-full">
                         <Label>Country</Label>
@@ -198,7 +194,7 @@ const Profile = () => {
                             value={profileData.country}
                             onChange={changeHandler}
                             placeholder="India"
-                            className="w-full text-gray-600 bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
+                            className="w-full text-gray-600 dark:text-gray-200  bg-transparent focus-visible:ring-transparent  focus-visible:border-transparent outline-none border-none"
                         />
                     </div>
                 </div>
