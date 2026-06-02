@@ -8,7 +8,7 @@ import { useCartStore } from "@/store/useCartStore";
 
 const AvailableMenu = () => {
 
-    const { singleRestaurant, getSingleRestaurant, loading } = useRestaurantStore();
+    const { singleRestaurant, loading } = useRestaurantStore();
 
     if (loading) {
         return (<>

@@ -36,17 +36,18 @@ app.use('/api/v1/user', userRoute)
 app.use('/api/v1/restaurant', restaurantRouter)
 app.use('/api/v1/menu', MenuRouter)
 
+app.use(express.static(path.join(__dirname, "../../client/dist")));
 
+app.use((_, res) => {
+    res.sendFile(
+        path.join(__dirname, "../../client/dist/index.html")
+    );
+});
 
 app.listen(PORT, () => {
     connectDB()
     //(`server running on http://localhost:${PORT}/`);
-    
+
 })
 
-app.use(express.static(path.join(DIRNAME,"/client/dist")));
-
-app.use((_,res)=>{
-    res.sendFile(path.resolve(DIRNAME,'client',"dist","index.html"));
-});
 

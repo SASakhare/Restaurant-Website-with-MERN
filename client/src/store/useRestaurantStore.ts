@@ -34,7 +34,7 @@ export type RestaurantState = {
     restaurant: Restaurant | null,
     singleRestaurant: Restaurant | null,
     appliedFilter: string[],
-    searchRestaurants: null,
+    searchRestaurants: [],
     createRestaurant: (formData: FormData) => Promise<void>,
     getRestaurant: () => Promise<void>,
     updateRestaurant: (formData: FormData) => Promise<void>,
@@ -48,7 +48,7 @@ export const useRestaurantStore = create<RestaurantState>()(persist((set) => ({
 
     loading: false,
     restaurant: null,
-    searchRestaurants: null,
+    searchRestaurants:[],
     appliedFilter: [],
     singleRestaurant: null,
     createRestaurant: async (formData: FormData) => {

@@ -4,8 +4,11 @@
   "description": "This is backed for restaurant website with mern stack",
   "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch --env-file=.env --import tsx src/index.ts"
+    "dev": "node --watch --env-file=.env --import tsx server/src/index.ts",
+    "build:client": "npm install --prefix client && npm run build --prefix client",
+    "build": "npm install && npm run build:client",
+    "start": "node --env-file=.env --import tsx server/src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sejal sakhare",
   "license": "ISC",
@@ -31,7 +34,7 @@
     "@types/multer": "^2.1.0",
     "@types/node": "^25.9.1",
     "nodemon": "^3.1.14",
-    "tsx": "^4.22.3",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
 }

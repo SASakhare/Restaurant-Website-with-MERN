@@ -12,7 +12,7 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
 
     const { getSingleRestaurant } = useRestaurantStore();
 
-    const viewMenuHandler = async (e: any) => {
+    const viewMenuHandler = async () => {
 
         await getSingleRestaurant(item._id);
     }

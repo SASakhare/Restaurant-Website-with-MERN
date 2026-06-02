@@ -10,7 +10,7 @@ import { Timer } from 'lucide-react'
 
 const RestaurantDetail = () => {
 
-    const { singleRestaurant, getSingleRestaurant } = useRestaurantStore();
+    const { singleRestaurant } = useRestaurantStore();
 
     return (
         <div className="max-w-6xl mx-auto my-10">

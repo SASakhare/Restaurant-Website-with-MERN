@@ -45,8 +45,8 @@ const AddMenu = () => {
             <DialogMenu open={open} setOpen={setOpen} />
             <div className="mt-6 space-y-4">
                 {
-                    restaurant.menus.map((item, idx) => (
-                        <MenuCard key={item._id} id={item._id} url={item.image} itemName={item.name} description={item.description} price={item.price} />
+                    restaurant?.menus.map((item) => (
+                        <MenuCard key={item._id} id={item._id} url={item.image} itemName={item.name} description={item.description} price={item.price.toString()} />
                     ))
                 }
 
@@ -77,13 +77,13 @@ export const MenuCard = ({ id, url, itemName, description, price }: MenuItem) =>
     const [editOpen, setEditOpen] = useState<boolean>(false);
 
 
-    const updateHandler = (e: unknown) => {
+    const updateHandler = () => {
 
         setEditOpen(true);
 
     }
 
-    const deleteHandler = async (e) => {
+    const deleteHandler = async () => {
         await deleteMenu(id);
         await getRestaurant();
     }
@@ -107,7 +107,7 @@ export const MenuCard = ({ id, url, itemName, description, price }: MenuItem) =>
                 <Button onClick={updateHandler} className="w-full bg-button hover:bg-hoverButtonColor md:w-1/3 lg:w-1/3">
                     Edit
                 </Button>
-                <DeleteMenuDialog onDelete={deleteHandler} />
+                <DeleteMenuDialog onDelete={deleteHandler } />
             </div>
             <EditMenu selectedItem={item} setSelectedItem={setItem} editOpen={editOpen} setEditOpen={setEditOpen} />
         </div>
@@ -135,7 +135,7 @@ export const DialogMenu = ({ open, setOpen }: { open: boolean, setOpen: Dispatch
         price: "",
     });
 
-    const changeHandler = (e) => {
+    const changeHandler = (e: any) => {
         setItem({
             ...Item, [e.target.name]: e.target.type == "number" ? (e.target.value == "" ? "" : Number(e.target.value)) : e.target.value,
         })

@@ -46,7 +46,7 @@ const OrderCard = () => {
                     <SelectContent>
                         <SelectGroup>
                             {
-                                ["Pending", "Confirmed", "Preparing", "OutForDelivery", "Delivered"].map((option: string, index: number) => (
+                                ["Pending", "Confirmed", "Preparing", "OutForDelivery", "Delivered"].map((option: string) => (
                                     <SelectItem
                                         value={option}
                                     >

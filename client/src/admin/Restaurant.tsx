@@ -16,9 +16,9 @@ const Restaurant = () => {
         restaurantName: "",
         city: "",
         country: "",
-        deliveryTime: "",
+        deliveryTime: 0,
         cuisines: [],
-        imageFile: "",
+        imageFile: undefined,
 
     })
 
@@ -52,7 +52,7 @@ const Restaurant = () => {
                 country: fieldErrors.country?.[0] || "",
                 deliveryTime: fieldErrors.deliveryTime?.[0] || "",
                 cuisines: fieldErrors.cuisines?.[0] || "",
-                imageFile: fieldErrors.imageFile?.[0] || "",
+                imageFile: fieldErrors.imageFile?.[0] || undefined,
             } as unknown as Partial<RestaurantFormSchema>)
 
             // //(errors ? "true" : "false");
@@ -78,18 +78,32 @@ const Restaurant = () => {
 
 
             if (restaurant) {   //* update
-                await updateRestaurant(input);
+                await updateRestaurant(formData);
 
             } else {
                 //* create
-                await createRestaurant(input);
+                await createRestaurant(formData);
             }
 
             // //(errors);
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error.response.data.message)
         }
     }
+    const urlToFile = async (imageUrl: string | undefined): Promise<File | undefined> => {
+
+        if (!imageUrl) {
+            return undefined;
+        }
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+
+        return new File(
+            [blob],
+            "image.jpg",
+            { type: blob.type }
+        );
+    };
 
     useEffect(() => {
 
@@ -102,9 +116,9 @@ const Restaurant = () => {
                 restaurantName: restaurant?.restaurantName || "",
                 city: restaurant?.city || "",
                 country: restaurant?.country || "",
-                deliveryTime: restaurant?.deliveryTime || "",
+                deliveryTime: restaurant?.deliveryTime || 0,
                 cuisines: restaurant?.cuisines ? restaurant.cuisines.map((cuisine: string) => cuisine) : [],
-                imageFile: restaurant?.imageFile || "",
+                imageFile: await urlToFile(restaurant?.imageUrl.toString()) || undefined,
             })
         }
 
@@ -203,7 +217,7 @@ const Restaurant = () => {
                                     placeholder="Upload Restaurant Banner"
                                 />
                                 {
-                                    errors.imageFile && <span className="text-xs text-red-600 font-medium">{errors.imageFile} </span>
+                                    errors.imageFile && <span className="text-xs text-red-600 font-medium">{"File is required"} </span>
                                 }
                             </div>
                         </div>

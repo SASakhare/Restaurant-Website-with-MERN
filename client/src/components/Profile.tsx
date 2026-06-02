@@ -1,7 +1,6 @@
 import { Globe, Loader2, Locate, Mail, MapPin, Phone, Plus, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react"
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { useUserStore } from "@/store/useUserStore";
@@ -44,6 +43,7 @@ const Profile = () => {
             reader.onloadend = () => {
                 const result = reader.result as string;
                 setSelectedProfilePicture(result)
+
                 setProfileData((prevData) => ({
                     ...prevData,
                     profilePicture: result,
@@ -70,7 +70,7 @@ const Profile = () => {
         setProfileData({
             fullname: user?.fullname || "",
             email: user?.email || "",
-            phone: user?.contact || "",
+            phone: user?.contact.toString() || "",
             address: user?.address || "",
             city: user?.city || "",
             country: user?.country || "",
@@ -86,7 +86,7 @@ const Profile = () => {
                     <div className="flex items-center justify-center gap-2 bg-transparent">
                         <div className="relative group md:w-28 md:h-28 w-20 h-20 md:ml-20">
                             <Avatar className="md:w-28 md:h-28 w-20 h-20 ">
-                                <AvatarImage src={user?.profilePicture} />
+                                <AvatarImage src={selectedProfilePicture} />
                                 <AvatarFallback></AvatarFallback>
                             </Avatar>
 

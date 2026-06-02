@@ -32,8 +32,8 @@ const filterOptions: FilterOptionsState[] = [
 const FilterPage = () => {
 
 
-    const {setAppliedFilter, resetAppliedFilter, appliedFilter } = useRestaurantStore();
-    const appliedFilterHandler = (e: boolean, label: string) => {
+    const { setAppliedFilter, resetAppliedFilter, appliedFilter } = useRestaurantStore();
+    const appliedFilterHandler = (label: string) => {
         setAppliedFilter(label);
     }
 
@@ -59,7 +59,7 @@ const FilterPage = () => {
                                     data-[state=checked]:border-button
                                     data-[state=checked]:text-white
                                     "
-                            onCheckedChange={(e: boolean) => appliedFilterHandler(e, option.label)}
+                            onCheckedChange={() => appliedFilterHandler(option.label)}
                         />
                         <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed">{option.label}</Label>
                     </div>

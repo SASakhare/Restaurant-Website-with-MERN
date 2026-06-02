@@ -61,7 +61,7 @@ const EditMenu = ({ selectedItem, setSelectedItem, editOpen, setEditOpen }: { se
             await getRestaurant();
 
             const newMenu = {
-                url: menu?.image || "",
+                url: menu.image || "",
                 itemName: menu?.name || "",
                 description: menu?.description || "",
                 price: menu?.price || "",

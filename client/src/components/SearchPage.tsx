@@ -9,7 +9,7 @@ import RestaurantCardSkeleton from "./RestaurantCardSkeleton";
 
 import { X } from "lucide-react";
 import NoResultFound from "./NoResultFound";
-import { useRestaurantStore } from "@/store/useRestaurantStore";
+import { useRestaurantStore, type Restaurant } from "@/store/useRestaurantStore";
 
 
 const SearchPage = () => {
@@ -18,7 +18,6 @@ const SearchPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     const { loading, searchRestaurant, appliedFilter, searchRestaurants, setAppliedFilter } = useRestaurantStore();
-    const isresultGot = searchRestaurants ? true : false;
 
     const onSearchHandler = async () => {
 
@@ -86,7 +85,7 @@ const SearchPage = () => {
                         {/* Restaurant Cards */}
 
                         {
-                            (!loading && searchRestaurants == null || searchRestaurants.length == 0) ? (
+                            (!loading && (!searchRestaurants || searchRestaurants.length === 0)) ? (
                                 <NoResultFound searchText={`${params.text}`} />
                             ) : (
 
@@ -95,7 +94,7 @@ const SearchPage = () => {
                                         !loading ? (
                                             <>
                                                 {
-                                                    searchRestaurants && searchRestaurants.map((item) => (
+                                                    searchRestaurants && searchRestaurants.map((item: Restaurant) => (
 
                                                         <RestaurantCard item={item} />
                                                     ))

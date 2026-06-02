@@ -17,7 +17,7 @@ type MenuState = {
     loading: boolean,
     menu: Menu | null,
     createMenu: (formData: FormData) => Promise<void>,
-    editMenu: (formData: FormData) => Promise<void>,
+    editMenu: (formData: FormData) => Promise<Menu>,
     deleteMenu: (id: string) => Promise<void>,
 }
 
