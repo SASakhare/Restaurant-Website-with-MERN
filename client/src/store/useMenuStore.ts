@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-const API_END_POINT = "http://localhost:4080/api/v1/menu"
+const API_END_POINT = "https://restaurant-website-with-mern.onrender.com/api/v1/menu"
 axios.defaults.withCredentials = true;
 
 type Menu = {

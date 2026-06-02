@@ -5,7 +5,7 @@ import axios from "axios"
 import type { LoginInputState, SingupInputState } from "@/schema/userSchema"
 import { toast } from "sonner"
 
-const API_END_POINT = "http://localhost:4080/api/v1/user"
+const API_END_POINT = "https://restaurant-website-with-mern.onrender.com/api/v1/user"
 axios.defaults.withCredentials = true;
 
 export type User = {

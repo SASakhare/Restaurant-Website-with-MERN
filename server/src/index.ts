@@ -12,7 +12,7 @@ import path from "path";
 dotenv.config()
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'https://restaurant-website-with-mern.onrender.com',
     credentials: true
 }
 const app = express()
