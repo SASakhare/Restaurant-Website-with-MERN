@@ -162,7 +162,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
     forgotPassword: async (email: string) => {
         try {
             set({ loading: true });
-            const response = await axios.post(`${API_END_POINT}/forgot-password`, email,
+            const response = await axios.post(`${API_END_POINT}/forgot-password`, {email},
                 {
                     headers: {
                         "Content-Type": "application/json"
@@ -171,7 +171,7 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             );
 
             if (response.data.success) {
-                toast.success(response.data.message)
+                //toast.success(response.data.message)
                 set({ loading: false, user: null, isAuthenticated: false });
             }
 

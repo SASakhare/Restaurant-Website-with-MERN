@@ -183,7 +183,6 @@ export const forgotPassword = async (req: Request, res: Response) => {
             })
         }
 
-        //* send welcome email
 
         const resetToken = crypto.randomBytes(40).toString("hex");
 
