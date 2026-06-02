@@ -30,7 +30,7 @@ export type UserState = {
     verifyEmail: (otp: string) => Promise<void>,
     checkAuthentication: () => Promise<void>,
     logout: () => Promise<void>,
-    forgotPassword: () => Promise<void>,
+    forgotPassword: (email: string) => Promise<void>,
     resetPassword: (token: string, newPassword: string) => Promise<void>,
     updateProfile: (input: any) => Promise<void>,
 }
@@ -159,10 +159,10 @@ export const useUserStore = create<UserState>()(persist((set) => ({
         }
     },
 
-    forgotPassword: async () => {
+    forgotPassword: async (email: string) => {
         try {
             set({ loading: true });
-            const response = await axios.get(`${API_END_POINT}/forgot-password`,
+            const response = await axios.post(`${API_END_POINT}/forgot-password`, email,
                 {
                     headers: {
                         "Content-Type": "application/json"

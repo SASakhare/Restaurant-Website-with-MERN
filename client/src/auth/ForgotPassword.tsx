@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { useUserStore } from '@/store/useUserStore'
 import { Loader2, Mail } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -9,7 +10,11 @@ import { Link } from 'react-router-dom'
 const ForgotPassword = () => {
 
     const [email, setEmail] = useState<string>("");
-    const loading = false;
+    const { loading, forgotPassword } = useUserStore();
+
+    const forgotPasswordHandler = async () => {
+        await forgotPassword(email);
+    }
 
     return (
         <div className="flex items-center justify-center w-screen h-screen ">
@@ -35,7 +40,7 @@ const ForgotPassword = () => {
                 <div className="mb-6 flex justify-center items-center">
                     {
                         loading ? <Button disabled className="w-full bg-button hover:bg-hoverButtonColor"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait</Button> : (
-                            <Button type="submit" className="w-full bg-button hover:bg-hoverButtonColor">Send Reset Link</Button>
+                            <Button type="submit" onClick={forgotPasswordHandler} className="w-full bg-button hover:bg-hoverButtonColor">Send Reset Link</Button>
                         )
                     }
                 </div>
